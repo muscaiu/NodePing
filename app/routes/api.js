@@ -9,25 +9,26 @@ module.exports = function (router) {
     var messages = [];
 
     function test() {
-            hosts.forEach(function (host) {
-                ping.promise.probe(host, {
-                    timeout: 3,
-                    min_reply: 2,
-                    // extra: ["-i 2"],
-                }).then(function (res) {
-                    //console.log(`${res.host} ${res.alive} ${res.time}`);
-                    messages.push(`${res.host} - ${res.alive}`)
-                    pingArray(res.alive)
-                });
+        hosts.forEach(function (host) {
+            ping.promise.probe(host, {
+                timeout: 1,
+                //min_reply: 2,
+                // extra: ["-i 2"],
+            }).then(function (res) {
+                //console.log(`${res.host} ${res.alive} ${res.time}`);
+                messages.push({ ip: res.host, status: res.alive })
+                pingArray(res.alive)
             });
+        });
+        console.log(messages, messages.length)
+        setTimeout(test, 5000);
         messages = [];
-        setTimeout(test, 3000);
     }
 
     test();
 
     router.post('/getData', function (req, res) {
-        console.log(messages)
+        console.log(messages, messages.length)
         res.send(messages)
     })
 

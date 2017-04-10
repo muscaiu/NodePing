@@ -1,3 +1,5 @@
+'use strict'
+
 angular.module('mainController', [])
 
     .controller('mainCtrl', function ($scope, $http, $timeout) {
@@ -5,14 +7,12 @@ angular.module('mainController', [])
         var main = this;
 
         function test() {
-            $timeout(function () {
-                $http.post('api/getData', { test: 'testing data' })
-                    .then(function (response) {
-                        console.log(response.data)
-                        main.pingData = response.data
-                    })
-            });
-            setTimeout(test, 3000);
+            $http.post('api/getData', { test: 'testing data' })
+                .then(function (response) {
+                    console.log(response.data)
+                    main.pingData = response.data
+                })
+            setTimeout(test, 5000);
         }
         test();
 
