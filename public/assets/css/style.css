@@ -1,0 +1,6 @@
+.status-alive{
+    background-color: lightgreen;
+}
+.status-dead{
+    background-color: lightcoral;
+}

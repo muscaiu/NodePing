@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Ping Title</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body ng-app="pingApp">
@@ -18,7 +19,7 @@
         <p>Hosts:</p>
         <ul ng-repeat="item in main.pingData track by $index">
             <li>
-                <p>{{item.ip}} - {{item.status}}</p>
+                <a ng-class="item.status == true ? 'status-alive' : 'status-dead'">{{item.ip}}</a>
             </li>
         </ul>
     </div>
