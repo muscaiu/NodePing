@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Ping Title</title>
+</head>
+
+<body ng-app="pingApp">
+
+    <div ng-controller='mainCtrl as main'>
+
+        <p>Hosts:</p>
+        <ul ng-repeat="item in main.pingData track by $index">
+            <li>{{item}}</li>
+        </ul>
+    </div>
+
+    <!--Angular CDN's-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>-->
+
+    <!--Angular Config Routes-->
+    <script src="app/app.js"></script>
+    <!--<script src="app/routes.js"></script>-->
+
+    <!--Angular Controllers-->
+    <script src="app/controllers/mainCtrl.js"></script>
+</body>
+
+</html>
