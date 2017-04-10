@@ -19,7 +19,7 @@
         <p>Hosts:</p>
         <ul ng-repeat="item in main.pingData track by $index">
             <li>
-                <a ng-class="item.status == true ? 'status-alive' : 'status-dead'">{{item.ip}}</a>
+                <a ng-class="item.status == true ? 'status-alive' : 'status-dead'">{{item.ip}}</a> ({{item.time}}ms)
             </li>
         </ul>
     </div>

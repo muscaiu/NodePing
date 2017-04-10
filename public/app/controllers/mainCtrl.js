@@ -2,18 +2,18 @@
 
 angular.module('mainController', [])
 
-    .controller('mainCtrl', function ($scope, $http, $timeout) {
+    .controller('mainCtrl', function ($http, $timeout) {
 
         var main = this;
 
-        function test() {
+        function scan() {
             $http.post('api/getData', { test: 'testing data' })
                 .then(function (response) {
-                    console.log(response.data)
+                    console.log(response.data.length)
                     main.pingData = response.data
                 })
-            setTimeout(test, 5000);
+            setTimeout(scan, 5000);
         }
-        test();
+        scan();
 
     })
