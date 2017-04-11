@@ -16,10 +16,11 @@
 
     <div ng-controller='mainCtrl as main'>
 
-        <p>Hosts:</p>
-        <ul ng-repeat="item in main.pingData track by $index">
+        <p>Local Network:</p>
+        <ul ng-repeat="item in main.LocalNetworkArray track by $index">
             <li>
                 <a ng-class="item.status == true ? 'status-alive' : 'status-dead'">{{item.ip}}</a> ({{item.time}}ms)
+                <!--{{item}}-->
             </li>
         </ul>
     </div>

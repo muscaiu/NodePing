@@ -6,23 +6,18 @@ var http = require('http');
 module.exports = function (router) {
 
     var hosts = [
-        '8.8.8.8',
         '192.168.1.1',
+        '8.8.8.8',
         '192.168.0.1',
-        '192.168.0.2',
         '192.168.0.3',
-        '192.168.0.4',
-        '192.168.0.5',
-        '192.168.0.6',
-        '192.168.0.7',
-        '192.168.0.8',
+        '192.168.0.4'
     ];
     var messages = [];
 
     function scan() {
         hosts.forEach(function (host) {
             ping.promise.probe(host, {
-                timeout: 2,
+                timeout: 1,
                 //min_reply: 2,
                 // extra: ["-i 2"],
             }).then(function (res) {
