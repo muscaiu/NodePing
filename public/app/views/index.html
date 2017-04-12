@@ -16,23 +16,38 @@
 <body ng-app="pingApp">
 
     <div class="container" ng-controller='mainCtrl as main'>
+        <span>Ordered By: {{main.orderByField}}, Reverse Sort: {{main.reverseSort}}</span>
         <table class="table table-striped table-hover ">
             <thead>
                 <tr>
-                    <th>Ip</th>
-                    <th>Status</th>
-                    <th>Time</th>
+                    <th>
+                        <a href="#" ng-click="main.orderByField='ip'; main.reverseSort = !main.reverseSort">
+                        Ip
+                        <span ng-show="main.orderByField == 'ip'">
+                            <span ng-show="!main.reverseSort">^</span>
+                            <span ng-show="main.reverseSort">v</span>
+                        </span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#" ng-click="main.orderByField='status'; main.reverseSort = !main.reverseSort">
+                        Status
+                        <span ng-show="main.orderByField == 'status'">
+                            <span ng-show="!main.reverseSort">^</span>
+                            <span ng-show="main.reverseSort">v</span>
+                        </span>
+                        </a>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in main.LocalNetworkArray track by $index">
+                <tr ng-repeat="item in main.LocalNetworkArray | orderBy: main.orderByField:main.reverseSort">
                     <td>{{item.ip}}</td>
                     <td>
                         <a class="status-alive" ng-show="item.status === true">online</a>
                         <a class="status-dead" ng-show="item.status === false">offline</a>
                         <!--<a ng-class="item.status == true ? 'status-alive' : 'status-dead'"></a>-->
                     </td>
-                    <td>{{item.time}}</td>
                 </tr>
             </tbody>
         </table>
