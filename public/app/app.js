@@ -1,1 +1,6 @@
-angular.module('pingApp', ['mainController'])
+angular.module('pingApp', [
+    'appRoutes',
+    'mainController',
+    'homeController',
+    'listController'
+    ])

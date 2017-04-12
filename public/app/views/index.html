@@ -17,94 +17,7 @@
 <body ng-app="pingApp">
 
     <div class="container" ng-controller='mainCtrl as main'>
-
-
-        <span>Ordered By: {{main.orderByField}}, Reverse Sort: {{main.reverseSort}}</span>
-        <br><br>
-
-        <form>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                    <input type="text" class="form-control" placeholder="Search" ng-model="searchIp">
-                </div>
-            </div>
-        </form>
-
-        <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        <a href="#" ng-click="main.orderByField='ip'; main.reverseSort = !main.reverseSort">
-                        Ip
-                        <span ng-show="main.orderByField == 'ip'">
-                            <span ng-show="!main.reverseSort">^</span>
-                            <span ng-show="main.reverseSort">v</span>
-                        </span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="#" ng-click="main.orderByField='status'; main.reverseSort = !main.reverseSort">
-                        Status
-                        <span ng-show="main.orderByField == 'status'">
-                            <span ng-show="!main.reverseSort">^</span>
-                            <span ng-show="main.reverseSort">v</span>
-                        </span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="#" ng-click="main.orderByField='dpt'; main.reverseSort = !main.reverseSort">
-                        Department
-                        <span ng-show="main.orderByField == 'dpt'">
-                            <span ng-show="!main.reverseSort">^</span>
-                            <span ng-show="main.reverseSort">v</span>
-                        </span>
-                        </a>
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in main.LocalNetworkArray | orderBy: main.orderByField:main.reverseSort | filter: searchIp ">
-                    <td>{{item.ip}}</td>
-                    <td>
-                        <a class="status-alive" ng-show="item.status">online</a>
-                        <a class="status-dead" ng-show="!item.status">offline</a>
-                        <!--<a ng-class="item.status == true ? 'status-alive' : 'status-dead'"></a>-->
-                    </td>
-                    <td>Telekom</td>
-                    <td class="col-sm-1"><a href="#" class="btn btn-sm">Edit</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-        
+        <div ng-view></div>
     </div>
 
     <!--Angular CDN's-->
@@ -114,10 +27,12 @@
 
     <!--Angular Config Routes-->
     <script src="app/app.js"></script>
-    <!--<script src="app/routes.js"></script>-->
+    <script src="app/routes.js"></script>
 
     <!--Angular Controllers-->
     <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/homeCtrl.js"></script>
+    <script src="app/controllers/listCtrl.js"></script>
 </body>
 
 </html>
