@@ -18,14 +18,16 @@ module.exports = function (router) {
         hosts.forEach(function (host) {
             ping.promise.probe(host, {
                 timeout: 1,
-                //min_reply: 2,
+                //min_reply: 3,
                 // extra: ["-i 2"],
             }).then(function (res) {
                 //console.log(`${res.host} ${res.alive} ${res.time}`);
                 messages.push({ ip: res.host, status: res.alive, time: res.time })
             });
         });
-        console.log('before',messages.length)
+        messages.forEach(function(ip){
+            console.log( '---', ip.ip, ip.status, ip.time)
+        })
         messages = [];
         setTimeout(scan, 5000);
     }
@@ -33,7 +35,9 @@ module.exports = function (router) {
     scan();
 
     router.post('/getData', function (req, res) {
-        console.log('after',messages.length)
+        messages.forEach(function(ip){
+            console.log( '+++', ip.ip, ip.status, ip.time)
+        })
         res.send(messages)
     })
 

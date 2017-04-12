@@ -9,7 +9,9 @@ angular.module('mainController', [])
         main.LocalNetworkArray = [
             {ip:'192.168.0.1'},
             {ip:'192.168.0.3'},
-            {ip:'192.168.0.4'}            
+            {ip:'192.168.0.4'},            
+            {ip:'192.168.1.1'},            
+            {ip:'8.8.8.8'}       
         ]
 
         function scan() {
@@ -17,7 +19,7 @@ angular.module('mainController', [])
                 .then(function (response) {                                     
                     main.pingData = response.data
                     main.pingData.forEach(function(element){
-                        console.log(element.ip, element.status)
+                        console.log(element.ip, element.status, element.time)
                     })
 
                     main.LocalNetworkArray.forEach(function (localIp) {
