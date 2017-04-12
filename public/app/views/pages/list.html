@@ -14,8 +14,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" ng-click="list.open('lg')">ADD NEW</button>
-        <div ng-show="ctrl.selected">Selection from a modal: {{ ctrl.selected }}</div>
-        
+        <div>Selection from a modal: {{ ctrl.selected }}</div>
         <div class="modal-parent"></div>
     </div>
 </div>
@@ -26,30 +25,30 @@
         <tr>
             <th>
                 <a href="#" ng-click="list.orderByField='ip'; list.reverseSort = !list.reverseSort">
-                        Ip
-                        <span ng-show="list.orderByField == 'ip'">
-                            <span ng-show="!list.reverseSort">^</span>
-                            <span ng-show="list.reverseSort">v</span>
-                        </span>
-                        </a>
+                    Ip
+                    <span ng-show="list.orderByField == 'ip'">
+                        <span ng-show="!list.reverseSort">^</span>
+                        <span ng-show="list.reverseSort">v</span>
+                    </span>
+                    </a>
             </th>
             <th>
                 <a href="#" ng-click="list.orderByField='status'; list.reverseSort = !list.reverseSort">
-                        Status
-                        <span ng-show="list.orderByField == 'status'">
-                            <span ng-show="!list.reverseSort">^</span>
-                            <span ng-show="list.reverseSort">v</span>
-                        </span>
-                        </a>
+                    Status
+                    <span ng-show="list.orderByField == 'status'">
+                        <span ng-show="!list.reverseSort">^</span>
+                        <span ng-show="list.reverseSort">v</span>
+                    </span>
+                    </a>
             </th>
             <th>
                 <a href="#" ng-click="list.orderByField='dpt'; list.reverseSort = !list.reverseSort">
-                        Department
-                        <span ng-show="list.orderByField == 'dpt'">
-                            <span ng-show="!list.reverseSort">^</span>
-                            <span ng-show="list.reverseSort">v</span>
-                        </span>
-                        </a>
+                    Department
+                    <span ng-show="list.orderByField == 'dpt'">
+                        <span ng-show="!list.reverseSort">^</span>
+                        <span ng-show="list.reverseSort">v</span>
+                    </span>
+                    </a>
             </th>
             <th>Action</th>
         </tr>
