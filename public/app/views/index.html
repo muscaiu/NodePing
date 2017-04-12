@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Ping Title</title>
+    <title>BitechIT</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,11 +16,13 @@
 
 <body ng-app="pingApp">
 
-    <div class="container" ng-controller='mainCtrl as main'>
-        <div ng-view></div>
-    </div>
+    <navbar></navbar>
+    <div ng-view></div>
+
 
     <!--Angular CDN's-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>-->
@@ -33,6 +35,9 @@
     <script src="app/controllers/mainCtrl.js"></script>
     <script src="app/controllers/homeCtrl.js"></script>
     <script src="app/controllers/listCtrl.js"></script>
+
+    <!--Dirrectives-->
+    <script src="app/directives/navbar.js"></script>
 </body>
 
 </html>
