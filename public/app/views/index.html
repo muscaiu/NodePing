@@ -17,14 +17,18 @@
 <body ng-app="pingApp">
 
     <navbar></navbar>
-    <div ng-view></div>
-
+    <div class="container">
+        <div ng-view></div>
+    </div>
 
     <!--Angular CDN's-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>-->
 
     <!--Angular Config Routes-->
@@ -35,6 +39,8 @@
     <script src="app/controllers/mainCtrl.js"></script>
     <script src="app/controllers/homeCtrl.js"></script>
     <script src="app/controllers/listCtrl.js"></script>
+    <script src="app/controllers/ModalDemoCtrl.js"></script>
+    <script src="app/controllers/ModalInstanceCtrl.js"></script>
 
     <!--Dirrectives-->
     <script src="app/directives/navbar.js"></script>

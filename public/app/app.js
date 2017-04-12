@@ -1,7 +1,12 @@
 angular.module('pingApp', [
     'appRoutes',
+    'ngAnimate', 
+    'ngSanitize', 
+    'ui.bootstrap',
     'mainController',
     'homeController',
     'listController',
-    'navbarDirective'
+    'navbarDirective',
+    'ModalDemoController',
+    'ModalInstanceController'
     ])
