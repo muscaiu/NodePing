@@ -66,7 +66,6 @@ angular.module('listController', [])
             modalInstance.result
                 .then(function (newIp) {
                     list.newIp = newIp;
-                    console.log('list newIp:', list)
 
                     Ip.create({
                         newIp: newIp

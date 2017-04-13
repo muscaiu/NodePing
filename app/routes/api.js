@@ -1,5 +1,6 @@
 'use strict'
 
+var Ip = require('../models/ip')
 var ping = require('ping');
 var http = require('http');
 
@@ -41,8 +42,25 @@ module.exports = function (router) {
         res.send(messages)
     })
 
-    router.post('/newIp', function(req, res){
+    router.post('/newIp', function (req, res) {
         console.log(req.body.newIp)
+        var ip = new Ip()
+        ip.Ip = req.body.newIp.Ip
+        ip.Department = req.body.newIp.Dpt
+        ip.Processor = req.body.newIp.Proc
+
+        // if (req.body.nomecognome === null || req.body.nomecognome === undefined || req.body.nomecognome === '' ||
+        //     req.body.sesso === null || req.body.sesso === undefined || req.body.sesso === '' ||
+        //     req.body.email === null || req.body.email === undefined || req.body.email === '') {
+        //     res.json({ success: false, message: 'Empty fields' })
+        // } else {
+        ip.save(function (err) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('data save ok')
+            }
+        })
         res.send(req.body.newIp)
     })
 
