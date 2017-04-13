@@ -8,33 +8,20 @@ angular.module('machineListController', [])
         machineList.orderByField = 'ip';
         machineList.reverseSort = false;
 
-        machineList.LocalNetworkArray = [
-            { ip: '192.168.0.1' },
-            { ip: '192.168.0.3' },
-            { ip: '192.168.0.4' },
-            { ip: '192.168.1.1' },
-            { ip: '8.8.8.8' }
-        ]
+        Machine.getAllMachines().then(function (response) {
+            machineList.allMachines = response.data
+            console.log('getallmachines', machineList.allMachines)
+        })
 
-        function Scan() {
-            $http.post('api/getData', { test: 'testing data' })
-                .then(function (response) {
-                    machineList.pingData = response.data
-                    // machineList.pingData.forEach(function (element) {
-                    //     console.log(element.ip, element.status, element.time)
-                    // })
+        var Scan = function () {
 
-                    machineList.LocalNetworkArray.forEach(function (localIp) {
-                        machineList.pingData.forEach(function (serverIp) {
-                            if (localIp.ip == serverIp.ip) {
-                                localIp.status = serverIp.status
-                            }
-                        })
-                    }, this);
-                })
-            setTimeout(Scan, 6000);
+            Machine.getAllMachines().then(function (response) {
+                machineList.allMachines = response.data
+                console.log('Scan 6 sec', machineList.allMachines)
+            })
+            setTimeout(Scan, 6000)
         }
-        Scan();
+        Scan()
 
 
         machineList.items = ['item1', 'item2', 'item3'];
@@ -67,10 +54,10 @@ angular.module('machineListController', [])
                 .then(function (newMachine) {
                     machineList.newMachine = newMachine;
 
-                    Machine.create({
+                    Machine.newMachine({
                         newMachine: newMachine
                     }).then(function (response) {
-                        console.log('got back:',response.data)
+                        console.log('got back:', response.data)
                     })
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());

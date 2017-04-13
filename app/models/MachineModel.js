@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var MachineSchema = new Schema({
     Ip: { type: String },
+    Status: {type: Boolean},
     Department: { type: String },
     Processor: { type: String},
 })
