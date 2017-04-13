@@ -7,10 +7,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'homeCtrl',
                 controllerAs: 'home'
             })
-            .when('/list', {
-                templateUrl: 'app/views/pages/list.html',
-                controller: 'listCtrl',
-                controllerAs: 'list',
+            .when('/machinelist', {
+                templateUrl: 'app/views/pages/MachineList.html',
+                controller: 'machineListCtrl',
+                controllerAs: 'machineList',
             })
 
             .otherwise({ redirectTo: '/' });

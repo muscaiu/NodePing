@@ -13,7 +13,7 @@
         </form>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" ng-click="list.open('lg')">ADD NEW</button>
+        <button type="button" class="btn btn-primary" ng-click="machineList.open('lg')">ADD NEW</button>
     </div>
 </div>
 
@@ -22,29 +22,29 @@
     <thead>
         <tr>
             <th>
-                <a href="#" ng-click="list.orderByField='ip'; list.reverseSort = !list.reverseSort">
+                <a href="#" ng-click="machineList.orderByField='ip'; machineList.reverseSort = !machineList.reverseSort">
                     Ip
-                    <span ng-show="list.orderByField == 'ip'">
-                        <span ng-show="!list.reverseSort">^</span>
-                        <span ng-show="list.reverseSort">v</span>
+                    <span ng-show="machineList.orderByField == 'ip'">
+                        <span ng-show="!machineList.reverseSort">^</span>
+                        <span ng-show="machineList.reverseSort">v</span>
                     </span>
                     </a>
             </th>
             <th>
-                <a href="#" ng-click="list.orderByField='status'; list.reverseSort = !list.reverseSort">
+                <a href="#" ng-click="machineList.orderByField='status'; machineList.reverseSort = !machineList.reverseSort">
                     Status
-                    <span ng-show="list.orderByField == 'status'">
-                        <span ng-show="!list.reverseSort">^</span>
-                        <span ng-show="list.reverseSort">v</span>
+                    <span ng-show="machineList.orderByField == 'status'">
+                        <span ng-show="!machineList.reverseSort">^</span>
+                        <span ng-show="machineList.reverseSort">v</span>
                     </span>
                     </a>
             </th>
             <th>
-                <a href="#" ng-click="list.orderByField='dpt'; list.reverseSort = !list.reverseSort">
+                <a href="#" ng-click="machineList.orderByField='dpt'; machineList.reverseSort = !machineList.reverseSort">
                     Department
-                    <span ng-show="list.orderByField == 'dpt'">
-                        <span ng-show="!list.reverseSort">^</span>
-                        <span ng-show="list.reverseSort">v</span>
+                    <span ng-show="machineList.orderByField == 'dpt'">
+                        <span ng-show="!machineList.reverseSort">^</span>
+                        <span ng-show="machineList.reverseSort">v</span>
                     </span>
                     </a>
             </th>
@@ -52,7 +52,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="item in list.LocalNetworkArray | orderBy: list.orderByField:list.reverseSort | filter: searchIp ">
+        <tr ng-repeat="item in machineList.LocalNetworkArray | orderBy: machineList.orderByField:machineList.reverseSort | filter: searchIp ">
             <td>{{item.ip}}</td>
             <td>
                 <a class="status-alive" ng-show="item.status">ONLINE</a>
@@ -65,4 +65,4 @@
     </tbody>
 </table>
 
-<!--<span>Ordered By: {{list.orderByField}}, Reverse Sort: {{list.reverseSort}}</span>-->
+<!--<span>Ordered By: {{machineList.orderByField}}, Reverse Sort: {{machineList.reverseSort}}</span>-->

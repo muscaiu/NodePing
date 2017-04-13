@@ -1,14 +1,14 @@
-angular.module('listController', [])
+angular.module('machineListController', [])
 
 
-    .controller('listCtrl', function ($http, $uibModal, $log, $document, Ip) {
+    .controller('machineListCtrl', function ($http, $uibModal, $log, $document, Machine) {
 
-        var list = this;
+        var machineList = this;
         //$location.path('/list')
-        list.orderByField = 'ip';
-        list.reverseSort = false;
+        machineList.orderByField = 'ip';
+        machineList.reverseSort = false;
 
-        list.LocalNetworkArray = [
+        machineList.LocalNetworkArray = [
             { ip: '192.168.0.1' },
             { ip: '192.168.0.3' },
             { ip: '192.168.0.4' },
@@ -19,13 +19,13 @@ angular.module('listController', [])
         function Scan() {
             $http.post('api/getData', { test: 'testing data' })
                 .then(function (response) {
-                    list.pingData = response.data
-                    // list.pingData.forEach(function (element) {
+                    machineList.pingData = response.data
+                    // machineList.pingData.forEach(function (element) {
                     //     console.log(element.ip, element.status, element.time)
                     // })
 
-                    list.LocalNetworkArray.forEach(function (localIp) {
-                        list.pingData.forEach(function (serverIp) {
+                    machineList.LocalNetworkArray.forEach(function (localIp) {
+                        machineList.pingData.forEach(function (serverIp) {
                             if (localIp.ip == serverIp.ip) {
                                 localIp.status = serverIp.status
                             }
@@ -37,18 +37,18 @@ angular.module('listController', [])
         Scan();
 
 
-        list.items = ['item1', 'item2', 'item3'];
+        machineList.items = ['item1', 'item2', 'item3'];
 
-        list.animationsEnabled = true;
+        machineList.animationsEnabled = true;
 
-        list.open = function (size, parentSelector) {
+        machineList.open = function (size, parentSelector) {
             console.log('open Modal')
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
 
             var modalInstance = $uibModal.open(
                 {
-                    animation: list.animationsEnabled,
+                    animation: machineList.animationsEnabled,
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'app/modals/myModalContent.html',
@@ -58,16 +58,16 @@ angular.module('listController', [])
                     appendTo: parentElem,
                     resolve: { //send the list of items to the modal
                         items: function () {
-                            return list.items;
+                            return machineList.items;
                         }
                     }
                 });
 
             modalInstance.result
                 .then(function (newMachine) {
-                    list.newMachine = newMachine;
+                    machineList.newMachine = newMachine;
 
-                    Ip.create({
+                    Machine.create({
                         newMachine: newMachine
                     }).then(function (response) {
                         console.log('got back:',response.data)
