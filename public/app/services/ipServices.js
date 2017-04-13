@@ -4,7 +4,6 @@ angular.module('ipServices', [])
         ipFactory = {};
 
         ipFactory.create = function (newIp) {
-            console.log('service newip: ', newIp)
             return $http.post('/api/newIp', newIp)
             // .then(function(response) {
             //     console.log("Data saved status:", response.data.success);
