@@ -64,11 +64,11 @@ angular.module('listController', [])
                 });
 
             modalInstance.result
-                .then(function (newIp) {
-                    list.newIp = newIp;
+                .then(function (newMachine) {
+                    list.newMachine = newMachine;
 
                     Ip.create({
-                        newIp: newIp
+                        newMachine: newMachine
                     }).then(function (response) {
                         console.log('got back:',response.data)
                     })

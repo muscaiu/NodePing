@@ -1,6 +1,6 @@
 'use strict'
 
-var Ip = require('../models/ip')
+var Machine = require('../models/MachineModel')
 var ping = require('ping');
 var http = require('http');
 
@@ -8,25 +8,17 @@ module.exports = function (router) {
 
     var hosts = []
 
-    var UpdatHosts = function () {
-        Ip.find({}, function (err, ipList) {
+     function UpdatHosts() {
+        Machine.find({}, function (err, machineList) {
             if (!err) {
-                hosts = ipList
+                hosts = machineList
             } else {
                 console.log(err)
             }
         })
     }
     UpdatHosts()
-    console.log(hosts)
 
-    // var hosts = [
-    //     '192.168.1.1',
-    //     '8.8.8.8',
-    //     '192.168.0.1',
-    //     '192.168.0.3',
-    //     '192.168.0.4'
-    // ];
     var messages = [];
 
     function scan() {
@@ -56,21 +48,21 @@ module.exports = function (router) {
         res.send(messages)
     })
 
-    router.post('/newIp', function (req, res) {
-        console.log(req.body.newIp)
-        var ip = new Ip()
-        ip.Ip = req.body.newIp.Ip
-        ip.Department = req.body.newIp.Dpt
-        ip.Processor = req.body.newIp.Proc
+    router.post('/newMachine', function (req, res) {
+        console.log(req.body.newMachine)
+        var machine = new Machine()
+        machine.Ip = req.body.newMachine.Ip
+        machine.Department = req.body.newMachine.Dpt
+        machine.Processor = req.body.newMachine.Proc
 
-        ip.save(function (err) {
+        machine.save(function (err) {
             if (err) {
                 console.log(err)
             } else {
                 console.log('data save ok')
             }
         })
-        res.send(req.body.newIp)
+        res.send(req.body.newMachine)
     })
 
     //http://127.0.0.1:3000/api/getinterviews

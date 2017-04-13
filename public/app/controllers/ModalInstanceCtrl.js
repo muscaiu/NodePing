@@ -8,7 +8,7 @@ angular.module('ModalInstanceController', [])
         };
 
         ctrl.ok = function () {
-            $uibModalInstance.close(ctrl.newIp);
+            $uibModalInstance.close(ctrl.newMachine);
         };
 
         ctrl.cancel = function () {

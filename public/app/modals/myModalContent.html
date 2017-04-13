@@ -19,13 +19,13 @@
         <div class="form-group">
             <label for="inputIp" class="col-lg-2 control-label">Ip</label>
             <div class="col-lg-10">
-                <input ng-model="ctrl.newIp.Ip" class="form-control" id="inputIp" placeholder="Ip" type="text">
+                <input ng-model="ctrl.newMachine.Ip" class="form-control" id="inputIp" placeholder="Ip" type="text">
             </div>
         </div>
         <div class="form-group">
             <label for="selectDpt" class="col-lg-2 control-label">Department</label>
             <div class="col-lg-10">
-                <select ng-model="ctrl.newIp.Dpt" class="form-control" id="selectDpt">
+                <select ng-model="ctrl.newMachine.Dpt" class="form-control" id="selectDpt">
                         <option>Maran</option>
                         <option>Server</option>
                         <option>Triboo</option>
@@ -36,7 +36,7 @@
         <div class="form-group">
             <label for="selectProc" class="col-lg-2 control-label">Processor</label>
             <div class="col-lg-10">
-                <select ng-model="ctrl.newIp.Proc" class="form-control" id="selectProc">
+                <select ng-model="ctrl.newMachine.Proc" class="form-control" id="selectProc">
                         <option>Intel</option>
                         <option>AMD</option>
                         <option>etc....</option>
@@ -47,6 +47,6 @@
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ctrl.ok(ctrl.newIp)">OK</button>
+    <button class="btn btn-primary" type="button" ng-click="ctrl.ok(ctrl.newMachine)">OK</button>
     <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Cancel</button>
 </div>

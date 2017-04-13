@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var IpSchema = new Schema({
+var MachineSchema = new Schema({
     Ip: { type: String },
     Department: { type: String },
     Processor: { type: String},
@@ -13,4 +13,4 @@ var IpSchema = new Schema({
 // })
 
 
-module.exports = mongoose.model('Ip', IpSchema)
+module.exports = mongoose.model('Ip', MachineSchema)

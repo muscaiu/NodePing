@@ -3,8 +3,8 @@ angular.module('ipServices', [])
     .factory('Ip', function ($http) {
         ipFactory = {};
 
-        ipFactory.create = function (newIp) {
-            return $http.post('/api/newIp', newIp)
+        ipFactory.create = function (newMachine) {
+            return $http.post('/api/newMachine', newMachine)
             // .then(function(response) {
             //     console.log("Data saved status:", response.data.success);
             // })
