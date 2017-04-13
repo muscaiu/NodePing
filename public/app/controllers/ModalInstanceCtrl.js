@@ -7,8 +7,7 @@ angular.module('ModalInstanceController', [])
             item: ctrl.items[0]
         };
 
-        ctrl.ok = function (ip) {
-            //console.log(ip)
+        ctrl.ok = function () {
             $uibModalInstance.close(ctrl.newIp);
         };
 

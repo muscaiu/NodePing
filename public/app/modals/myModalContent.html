@@ -13,38 +13,37 @@
     Selected: <b>{{ ctrl.selected.item }}</b>-->
 
 
-    <form ng-submit="ctrl.submitIp(newIp)" class="form-horizontal">
-        <fieldset>
-            <!--<legend>Legend</legend>-->
-            <div class="form-group">
-                <label for="inputIp" class="col-lg-2 control-label">Ip</label>
-                <div class="col-lg-10">
-                    <input ng-model="ctrl.newIp.Ip" class="form-control" id="inputIp" placeholder="Ip" type="text">
-                </div>
+
+    <fieldset>
+        <!--<legend>Legend</legend>-->
+        <div class="form-group">
+            <label for="inputIp" class="col-lg-2 control-label">Ip</label>
+            <div class="col-lg-10">
+                <input ng-model="ctrl.newIp.Ip" class="form-control" id="inputIp" placeholder="Ip" type="text">
             </div>
-            <div class="form-group">
-                <label for="selectDpt" class="col-lg-2 control-label">Department</label>
-                <div class="col-lg-10">
-                    <select ng-model="ctrl.newIp.Dpt" class="form-control" id="selectDpt">
+        </div>
+        <div class="form-group">
+            <label for="selectDpt" class="col-lg-2 control-label">Department</label>
+            <div class="col-lg-10">
+                <select ng-model="ctrl.newIp.Dpt" class="form-control" id="selectDpt">
                         <option>Maran</option>
                         <option>Server</option>
                         <option>Triboo</option>
                         <option>Telekom</option>
                     </select>
-                </div>
             </div>
-            <div class="form-group">
-                <label for="selectProc" class="col-lg-2 control-label">Processor</label>
-                <div class="col-lg-10">
-                    <select ng-model="ctrl.newIp.Proc" class="form-control" id="selectProc">
+        </div>
+        <div class="form-group">
+            <label for="selectProc" class="col-lg-2 control-label">Processor</label>
+            <div class="col-lg-10">
+                <select ng-model="ctrl.newIp.Proc" class="form-control" id="selectProc">
                         <option>Intel</option>
                         <option>AMD</option>
                         <option>etc....</option>
                     </select>
-                </div>
             </div>
-        </fieldset>
-    </form>
+        </div>
+    </fieldset>
 
 </div>
 <div class="modal-footer">

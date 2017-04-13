@@ -1,7 +1,7 @@
 angular.module('listController', [])
 
 
-    .controller('listCtrl', function ($http, $uibModal, $log, $document) {
+    .controller('listCtrl', function ($http, $uibModal, $log, $document, Ip) {
 
         var list = this;
         //$location.path('/list')
@@ -64,9 +64,15 @@ angular.module('listController', [])
                 });
 
             modalInstance.result
-                .then(function (selectedItem) {
-                    list.selected = selectedItem;
-                    console.log(selectedItem)
+                .then(function (newIp) {
+                    list.newIp = newIp;
+                    console.log('list newIp:', list)
+
+                    Ip.create({
+                        newIp: newIp
+                    }).then(function (response) {
+                        console.log('got back:',response.data)
+                    })
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
                 });

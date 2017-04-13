@@ -7,5 +7,6 @@ angular.module('pingApp', [
     'homeController',
     'listController',
     'navbarDirective',
-    'ModalInstanceController'
+    'ModalInstanceController',
+    'ipServices'
     ])

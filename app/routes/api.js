@@ -41,5 +41,10 @@ module.exports = function (router) {
         res.send(messages)
     })
 
+    router.post('/newIp', function(req, res){
+        console.log(req.body.newIp)
+        res.send(req.body.newIp)
+    })
+
     return router //return whatever the route is
 }
