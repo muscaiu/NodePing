@@ -8,10 +8,6 @@ angular.module('listController', [])
         list.orderByField = 'ip';
         list.reverseSort = false;
 
-        list.open = function () {
-            console.log('click..........')
-        }
-
         list.LocalNetworkArray = [
             { ip: '192.168.0.1' },
             { ip: '192.168.0.3' },
@@ -24,9 +20,9 @@ angular.module('listController', [])
             $http.post('api/getData', { test: 'testing data' })
                 .then(function (response) {
                     list.pingData = response.data
-                    list.pingData.forEach(function (element) {
-                        console.log(element.ip, element.status, element.time)
-                    })
+                    // list.pingData.forEach(function (element) {
+                    //     console.log(element.ip, element.status, element.time)
+                    // })
 
                     list.LocalNetworkArray.forEach(function (localIp) {
                         list.pingData.forEach(function (serverIp) {
@@ -46,7 +42,7 @@ angular.module('listController', [])
         list.animationsEnabled = true;
 
         list.open = function (size, parentSelector) {
-            console.log('ss----------------------ss')
+            console.log('open Modal')
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
 
@@ -60,18 +56,20 @@ angular.module('listController', [])
                     controllerAs: 'ctrl',
                     size: size,
                     appendTo: parentElem,
-                    resolve: {
+                    resolve: { //send the list of items to the modal
                         items: function () {
                             return list.items;
                         }
                     }
                 });
 
-            modalInstance.result.then(function (selectedItem) {
-                list.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
+            modalInstance.result
+                .then(function (selectedItem) {
+                    list.selected = selectedItem;
+                    console.log(selectedItem)
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
         };
 
     })

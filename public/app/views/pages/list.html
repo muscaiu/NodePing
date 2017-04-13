@@ -14,7 +14,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" ng-click="list.open('lg')">ADD NEW</button>
-        <div>Selection from a modal: {{ ctrl.selected }}</div>
+        <div>Selection from a modal: {{ list.selected }}</div>
         <div class="modal-parent"></div>
     </div>
 </div>
@@ -57,8 +57,8 @@
         <tr ng-repeat="item in list.LocalNetworkArray | orderBy: list.orderByField:list.reverseSort | filter: searchIp ">
             <td>{{item.ip}}</td>
             <td>
-                <a class="status-alive" ng-show="item.status">online</a>
-                <a class="status-dead" ng-show="!item.status">offline</a>
+                <a class="status-alive" ng-show="item.status">ONLINE</a>
+                <a class="status-dead" ng-show="!item.status">OFFLINE</a>
                 <!--<a ng-class="item.status == true ? 'status-alive' : 'status-dead'"></a>-->
             </td>
             <td>Telekom</td>
@@ -67,4 +67,4 @@
     </tbody>
 </table>
 
-<span>Ordered By: {{list.orderByField}}, Reverse Sort: {{list.reverseSort}}</span>
+<!--<span>Ordered By: {{list.orderByField}}, Reverse Sort: {{list.reverseSort}}</span>-->

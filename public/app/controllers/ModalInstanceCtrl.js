@@ -1,4 +1,4 @@
-angular.module('ModalInstanceController',[])
+angular.module('ModalInstanceController', [])
 
     .controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
         var ctrl = this;
@@ -9,6 +9,7 @@ angular.module('ModalInstanceController',[])
 
         ctrl.ok = function () {
             $uibModalInstance.close(ctrl.selected.item);
+            console.log(ctrl.selected)
         };
 
         ctrl.cancel = function () {

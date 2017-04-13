@@ -25,9 +25,9 @@ module.exports = function (router) {
                 messages.push({ ip: res.host, status: res.alive, time: res.time })
             });
         });
-        messages.forEach(function(ip){
-            console.log( '---', ip.ip, ip.status, ip.time)
-        })
+        // messages.forEach(function(ip){
+        //     console.log( '---', ip.ip, ip.status, ip.time)
+        // })
         messages = [];
         setTimeout(scan, 5000);
     }
@@ -35,9 +35,9 @@ module.exports = function (router) {
     scan();
 
     router.post('/getData', function (req, res) {
-        messages.forEach(function(ip){
-            console.log( '+++', ip.ip, ip.status, ip.time)
-        })
+        // messages.forEach(function(ip){
+        //     console.log( '+++', ip.ip, ip.status, ip.time)
+        // })
         res.send(messages)
     })
 
