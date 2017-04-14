@@ -61,7 +61,9 @@ module.exports = function (router) {
     router.post('/getAllMachines', function (req, res) {
         Machine.find({}, function (err, allMachines) {
             if (!err) {
+                //console.log(allMachines)
                 res.send(allMachines)
+                //console.log('------------')
                 // LogMessage(req.body.username, 'get all Int', 'success')
             } else {
                 // LogMessage(req.body.username, 'get all Int', 'error')

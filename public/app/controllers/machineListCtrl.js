@@ -1,38 +1,35 @@
 angular.module('machineListController', [])
 
 
-    .controller('machineListCtrl', function ($http, $uibModal, $log, $document, Machine) {
+    .controller('machineListCtrl', function ($http, $timeout, $uibModal, $log, $document, Machine) {
 
         var machineList = this;
         //$location.path('/list')
         machineList.orderByField = 'ip';
         machineList.reverseSort = false;
 
-        Machine.getAllMachines().then(function (response) {
-            machineList.allMachines = response.data
-            console.log('getallmachines', machineList.allMachines)
-        })
-
-        var Scan = function () {
-
+        var RefreshData = function () {
             Machine.getAllMachines().then(function (response) {
-                machineList.allMachines = response.data
-                console.log('Scan 6 sec', machineList.allMachines)
+                machineList.allMachines = [];
+                angular.extend(machineList.allMachines, response.data);
+                //machineList.allMachines = response.data
+                console.log('RefreshData 6 sec', machineList.allMachines)
             })
-            setTimeout(Scan, 6000)
+            setTimeout(RefreshData, 6000)
         }
-        Scan()
+        RefreshData()
 
+        machineList.recreate = function () {
+            RefreshData()
+        }
 
-        machineList.items = ['item1', 'item2', 'item3'];
-
+        //Modal Code
         machineList.animationsEnabled = true;
-
         machineList.open = function (size, parentSelector) {
             console.log('open Modal')
             var parentElem = parentSelector ?
                 angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
-
+            //Modal Setup
             var modalInstance = $uibModal.open(
                 {
                     animation: machineList.animationsEnabled,
@@ -49,11 +46,10 @@ angular.module('machineListController', [])
                         }
                     }
                 });
-
+            //Modal Result
             modalInstance.result
                 .then(function (newMachine) {
                     machineList.newMachine = newMachine;
-
                     Machine.newMachine({
                         newMachine: newMachine
                     }).then(function (response) {
