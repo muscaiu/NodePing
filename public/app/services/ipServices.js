@@ -10,9 +10,17 @@ angular.module('ipServices', [])
             // })
         }
 
-        machineFactory.getAllMachines = function (username) {
+        machineFactory.getAllMachines = function () {
             return $http.post('/api/getAllMachines')
         }
+
+        machineFactory.getClickedMachine = function (id) {
+            return $http.get('/api/getClickedMachine/' + id)
+        }
+
+        // machineFactory.editMachine = function (id) {
+        //     return $http.put('/api/editMachine', { id: id})
+        // }
 
         return machineFactory
     })

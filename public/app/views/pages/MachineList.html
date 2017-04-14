@@ -70,7 +70,7 @@
             </td>
             <td>{{item.Department}}</td>
             <td>{{item.Processor}}</td>
-            <td class="col-sm-1"><a href="#" class="btn btn-sm">Edit</a></td>
+            <td ng-click="machineList.EditMachine(item._id)" class="col-sm-1"><a href="#" class="btn btn-sm">Edit</a></td>
         </tr>
     </tbody>
 </table>

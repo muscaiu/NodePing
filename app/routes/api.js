@@ -26,7 +26,7 @@ module.exports = function (router) {
                 //min_reply: 3,
                 // extra: ["-i 2"],
             }).then(function (res) {
-                Machine.findOneAndUpdate({ Ip: host.Ip }, {Status: res.alive},{ new: true }, function (err) {
+                Machine.findOneAndUpdate({ Ip: host.Ip }, { Status: res.alive }, { new: true }, function (err) {
                     if (err) {
                         console.log(err)
                     } else {
@@ -68,6 +68,18 @@ module.exports = function (router) {
             } else {
                 // LogMessage(req.body.username, 'get all Int', 'error')
                 console.log(err)
+            }
+        })
+    })
+
+    router.get('/getClickedMachine/:id', function (req, res) {
+
+        Machine.findOne({ _id: req.params.id }).select().exec(function (err, item) {
+            if (err) throw err;
+            if (!item) {
+                console.log("Can't find id to edit.", 'error')
+            } else {
+                res.json({ item })
             }
         })
     })
