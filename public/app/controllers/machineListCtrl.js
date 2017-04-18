@@ -4,25 +4,43 @@ angular.module('machineListController', [])
     .controller('machineListCtrl', function ($http, $timeout, $uibModal, $log, $document, Machine) {
 
         var machineList = this;
+        var displayingObject = {}
         //$location.path('/list')
         machineList.orderByField = 'ip';
         machineList.reverseSort = false;
 
-        var RefreshData = function () {
-            Machine.getAllMachines().then(function (response) {
-                machineList.allMachines = [];
-                machineList.allMachines = response.data
-                console.log('RefreshData 6 sec', machineList.allMachines)
-            })
-            setTimeout(RefreshData, 6000)
+        var RefreshData = function (sortOption) {
+            if (!sortOption) {
+                console.log('no sort option')
+            } else {
+                Machine.getMachines(sortOption)
+                    .then(function (response) {
+                        // machineList.allMachines = [];
+                        machineList.allMachines = response.data
+                        console.log('RefreshData 6 sec', machineList.allMachines)
+                        displayingObject = {
+                            activator: 'All'
+                        }
+                    })
+                $timeout(RefreshData, 6000)
+            }
         }
-        RefreshData()
+        RefreshData('All')
 
-        // machineList.recreate = function () {
-        //     RefreshData()
-        // }
-
-
+        function checkDisplaying() {
+            if (displayingObject.activator === 'All') {
+                getMachinesFiltered('All')
+            } else {
+                console.log('diffrent check')
+            }
+        }
+        function getMachinesFiltered(sortOption) {
+            if (!sortOption) {
+                console.log('something wrong on getMachinesFiltered')
+            } else {
+                RefreshData(sortOption)
+            }
+        }
 
         machineList.EditMachine = function (id, parentSelector) {
             if (id) {
@@ -60,8 +78,8 @@ angular.module('machineListController', [])
                                 if (newMachine.action === 'delete') {
                                     console.log('deleteing', newMachine.id)
                                     Machine.delete(newMachine.id)
-                                        .then(function(response){
-                                            console.log('got back delete:',response.data)
+                                        .then(function (response) {
+                                            console.log('got back delete:', response.data)
                                         })
                                 } else {
                                     Machine.updateMachine(newMachine._id, newMachine)
@@ -108,12 +126,44 @@ angular.module('machineListController', [])
                     }, function () {
                         $log.info('Modal dismissed at: ' + new Date());
                     });
-
             }
         }
 
-
-
+        machineList.SortMachines = function (parentSelector) {
+            var parentElem = parentSelector ?
+                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+            //Modal Code
+            machineList.animationsEnabled = true;
+            //Modal Setup
+            var modalInstance = $uibModal.open(
+                {
+                    animation: machineList.animationsEnabled,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'app/modals/SortMachinesModal.html',
+                    controller: 'SortMachinesCtrl',
+                    controllerAs: 'sortCtrl',
+                    size: 'md',
+                    appendTo: parentElem,
+                    // resolve: { //send the list of items to the modal
+                    //     items: function () {
+                    //         return machineList.editedObject;
+                    //     }
+                    // }
+                });
+            //Modal Result
+            modalInstance.result
+                .then(function (sortOption) {
+                    machineList.sortOption = sortOption;
+                    // Machine.newMachine({
+                    //     newMachine: newMachine
+                    // }).then(function (response) {
+                    // })
+                    getMachinesFiltered(sortOption)
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+        }
 
 
     })

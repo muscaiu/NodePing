@@ -35,7 +35,7 @@ module.exports = function (router) {
                 })
 
             });
-        });   
+        });
         setTimeout(scan, 5000);
     }
 
@@ -58,18 +58,25 @@ module.exports = function (router) {
         res.send(req.body.newMachine)
     })
 
-    router.post('/getAllMachines', function (req, res) {
-        Machine.find({}, function (err, allMachines) {
-            if (!err) {
-                //console.log(allMachines)
-                res.send(allMachines)
-                //console.log('------------')
-                // LogMessage(req.body.username, 'get all Int', 'success')
-            } else {
-                // LogMessage(req.body.username, 'get all Int', 'error')
-                console.log(err)
-            }
-        })
+    router.post('/getMachines', function (req, res) {
+        console.log(req.body.sortOption)
+        if (req.body.sortOption === 'All') {
+            Machine.find({}, function (err, machines) {
+                if (!err) {
+                    res.send(machines)
+                } else {
+                    console.log(err)
+                }
+            })
+        } else {
+            Machine.find({ "Department": req.body.sortOption }, function (err, machines) {
+                if (!err) {
+                    res.send(machines)
+                } else {
+                    console.log(err)
+                }
+            })
+        }
     })
 
     router.get('/getClickedMachine/:id', function (req, res) {
@@ -105,11 +112,11 @@ module.exports = function (router) {
         });
     })
 
-    router.delete('/deleteMachine/:id', function(req, res){
-        Machine.findOne({_id: req.params.id}).remove().exec(function(err, data){
-            if(err){
+    router.delete('/deleteMachine/:id', function (req, res) {
+        Machine.findOne({ _id: req.params.id }).remove().exec(function (err, data) {
+            if (err) {
                 console.log(err)
-            }else{
+            } else {
                 console.log('delete ok', data.result.n)
                 res.send('data delete ok')
             }

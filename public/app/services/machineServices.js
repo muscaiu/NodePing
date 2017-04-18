@@ -7,8 +7,9 @@ angular.module('machineServices', [])
             return $http.post('/api/newMachine', newMachine)
         }
 
-        machineFactory.getAllMachines = function () {
-            return $http.post('/api/getAllMachines')
+        machineFactory.getMachines = function (sortOption) {
+            console.log('service', sortOption)
+            return $http.post('/api/getMachines', { sortOption: sortOption })
         }
 
         machineFactory.getClickedMachine = function (id) {
@@ -19,9 +20,10 @@ angular.module('machineServices', [])
             return $http.put('/api/updateMachine/' + id, { updateMachine: updateMachine })
         }
 
-        machineFactory.delete = function(id){
+        machineFactory.delete = function (id) {
             return $http.delete('/api/deleteMachine/' + id)
         }
+
 
         return machineFactory
     })

@@ -1,12 +1,7 @@
 angular.module('ModalInstanceController', [])
 
-    .controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+    .controller('ModalInstanceCtrl', function ($uibModalInstance) {
         var modalInstance = this;
-
-        if (items) {
-            modalInstance.newMachine = items;
-            console.log(items)
-        }
 
         modalInstance.ok = function () {
             $uibModalInstance.close(modalInstance.newMachine);
@@ -14,12 +9,5 @@ angular.module('ModalInstanceController', [])
 
         modalInstance.cancel = function () {
             $uibModalInstance.dismiss('cancel');
-        };
-        modalInstance.delete = function () {
-            $uibModalInstance.close(
-                {
-                    id: modalInstance.newMachine._id,
-                    action: 'delete'
-                });
         };
     });
