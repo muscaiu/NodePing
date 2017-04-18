@@ -54,7 +54,7 @@ angular.module('machineListController', [])
                                 templateUrl: 'app/modals/EditMachineModal.html',
                                 controller: 'EditMachineCtrl',
                                 controllerAs: 'ctrl',
-                                size: 'lg',
+                                size: 'md',
                                 appendTo: parentElem,
                                 resolve: { //send the list of items to the modal
                                     currentMachine: function () {
@@ -99,7 +99,7 @@ angular.module('machineListController', [])
                         templateUrl: 'app/modals/EditMachineModal.html',
                         controller: 'EditMachineCtrl',
                         controllerAs: 'ctrl',
-                        size: 'lg',
+                        size: 'md',
                         appendTo: parentElem,
                         resolve: { //send the list of items to the modal
                             currentMachine: function () {
