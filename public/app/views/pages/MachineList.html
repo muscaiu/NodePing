@@ -14,7 +14,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" ng-click="machineList.EditMachine()">ADD NEW MACHINE</button>
-        <button type="button" class="btn btn-primary pull-right" ng-click="machineList.SortMachines()">SORT</button>
+        <button type="button" class="btn btn-primary" ng-click="machineList.SortMachines()">SORT</button>
         <!--<button ng-click="machineList.recreate()">Recreate</button>-->
     </div>
 </div>
@@ -71,7 +71,7 @@
             </td>
             <td>{{item.Department}}</td>
             <td>{{item.Processor}}</td>
-            <td ng-click="machineList.EditMachine(item._id)" class="col-sm-1"><a href="#" class="btn btn-sm">Edit</a></td>
+            <td class="col-sm-1"><a ng-click="machineList.EditMachine(item._id)" href="#" class="btn btn-sm">Edit</a></td>
         </tr>
     </tbody>
 </table>

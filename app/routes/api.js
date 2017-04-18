@@ -36,7 +36,7 @@ module.exports = function (router) {
 
             });
         });
-        setTimeout(scan, 5000);
+        setTimeout(scan, 2000);
     }
 
     scan();

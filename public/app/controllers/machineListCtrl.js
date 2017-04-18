@@ -20,7 +20,7 @@ angular.module('machineListController', [])
                         machineList.allMachines = response.data
                         console.log('RefreshData 6 sec', machineList.allMachines)
                     })
-                $timeout(RefreshData, 6000)
+                $timeout(RefreshData, 2000)
             }
         }
         checkDisplaying()
