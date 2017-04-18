@@ -15,6 +15,10 @@ angular.module('SortMachinesController', [])
             console.log(option)
             $uibModalInstance.close(option);
         };
+        modalInstance.Telekom = function (option) {
+            console.log(option)
+            $uibModalInstance.close(option);
+        };
 
         // modalInstance.cancel = function () {
         //     $uibModalInstance.dismiss('cancel');

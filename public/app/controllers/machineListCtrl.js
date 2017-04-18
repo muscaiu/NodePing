@@ -20,21 +20,14 @@ angular.module('machineListController', [])
                         // machineList.allMachines = [];
                         machineList.allMachines = response.data
                         console.log('RefreshData 6 sec', machineList.allMachines)
-                        displayingObject = {
-                            activator: 'All'
-                        }
                     })
                 $timeout(RefreshData, 6000)
             }
         }
-        RefreshData('All')
+        checkDisplaying()
 
         function checkDisplaying() {
-            if (displayingObject.activator === 'All') {
-                getMachinesFiltered('All')
-            } else {
-                console.log('diffrent check')
-            }
+            getMachinesFiltered(machineList.sortOption.Department)
         }
         function getMachinesFiltered() {
             if (!machineList.sortOption.Department) {
@@ -79,11 +72,13 @@ angular.module('machineListController', [])
                                     console.log('deleteing', newMachine.id)
                                     Machine.delete(newMachine.id)
                                         .then(function (response) {
+                                            checkDisplaying()
                                             console.log('got back delete:', response.data)
                                         })
                                 } else {
                                     Machine.updateMachine(newMachine._id, newMachine)
                                         .then(function (response) {
+                                            checkDisplaying()
                                             console.log('got back update:', response.data)
                                         })
                                 }
@@ -121,6 +116,7 @@ angular.module('machineListController', [])
                         Machine.newMachine({
                             newMachine: newMachine
                         }).then(function (response) {
+                            checkDisplaying()
                             console.log('got back:', response.data)
                         })
                     }, function () {
@@ -159,7 +155,7 @@ angular.module('machineListController', [])
                     //     newMachine: newMachine
                     // }).then(function (response) {
                     // })
-                    getMachinesFiltered()
+                    checkDisplaying()
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
                 });
