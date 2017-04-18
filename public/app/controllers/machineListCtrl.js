@@ -1,6 +1,5 @@
 angular.module('machineListController', [])
 
-
     .controller('machineListCtrl', function ($http, $timeout, $uibModal, $log, $document, Machine) {
 
         var machineList = this;
@@ -8,12 +7,15 @@ angular.module('machineListController', [])
         //$location.path('/list')
         machineList.orderByField = 'ip';
         machineList.reverseSort = false;
+        machineList.sortOption = {
+            Department: 'All'
+        }
 
-        var RefreshData = function (sortOption) {
-            if (!sortOption) {
+        var RefreshData = function () {
+            if (!machineList.sortOption.Department) {
                 console.log('no sort option')
             } else {
-                Machine.getMachines(sortOption)
+                Machine.getMachines(machineList.sortOption.Department)
                     .then(function (response) {
                         // machineList.allMachines = [];
                         machineList.allMachines = response.data
@@ -34,11 +36,11 @@ angular.module('machineListController', [])
                 console.log('diffrent check')
             }
         }
-        function getMachinesFiltered(sortOption) {
-            if (!sortOption) {
+        function getMachinesFiltered() {
+            if (!machineList.sortOption.Department) {
                 console.log('something wrong on getMachinesFiltered')
             } else {
-                RefreshData(sortOption)
+                RefreshData()
             }
         }
 
@@ -47,8 +49,6 @@ angular.module('machineListController', [])
                 Machine.getClickedMachine(id)
                     .then(function (response) {
                         machineList.editedObject = response.data.item
-
-                        console.log('Edit Modal', id)
                         var parentElem = parentSelector ?
                             angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
                         //Modal Code
@@ -59,13 +59,13 @@ angular.module('machineListController', [])
                                 animation: machineList.animationsEnabled,
                                 ariaLabelledBy: 'modal-title',
                                 ariaDescribedBy: 'modal-body',
-                                templateUrl: 'app/modals/myModalContent.html',
-                                controller: 'ModalInstanceCtrl',
+                                templateUrl: 'app/modals/EditMachineModal.html',
+                                controller: 'EditMachineCtrl',
                                 controllerAs: 'ctrl',
                                 size: 'lg',
                                 appendTo: parentElem,
                                 resolve: { //send the list of items to the modal
-                                    items: function () {
+                                    currentMachine: function () {
                                         console.log(machineList.editedObject)
                                         return machineList.editedObject;
                                     }
@@ -102,13 +102,13 @@ angular.module('machineListController', [])
                         animation: machineList.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'app/modals/myModalContent.html',
-                        controller: 'ModalInstanceCtrl',
+                        templateUrl: 'app/modals/EditMachineModal.html',
+                        controller: 'EditMachineCtrl',
                         controllerAs: 'ctrl',
                         size: 'lg',
                         appendTo: parentElem,
                         resolve: { //send the list of items to the modal
-                            items: function () {
+                            currentMachine: function () {
                                 machineList.editedObject = {}
                                 return machineList.editedObject;
                             }
@@ -154,12 +154,12 @@ angular.module('machineListController', [])
             //Modal Result
             modalInstance.result
                 .then(function (sortOption) {
-                    machineList.sortOption = sortOption;
+                    machineList.sortOption.Department = sortOption;
                     // Machine.newMachine({
                     //     newMachine: newMachine
                     // }).then(function (response) {
                     // })
-                    getMachinesFiltered(sortOption)
+                    getMachinesFiltered()
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
                 });

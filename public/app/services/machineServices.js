@@ -8,7 +8,7 @@ angular.module('machineServices', [])
         }
 
         machineFactory.getMachines = function (sortOption) {
-            console.log('service', sortOption)
+            //console.log('service', sortOption)
             return $http.post('/api/getMachines', { sortOption: sortOption })
         }
 
