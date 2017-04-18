@@ -18,9 +18,9 @@ angular.module('machineListController', [])
         }
         RefreshData()
 
-        machineList.recreate = function () {
-            RefreshData()
-        }
+        // machineList.recreate = function () {
+        //     RefreshData()
+        // }
 
 
 

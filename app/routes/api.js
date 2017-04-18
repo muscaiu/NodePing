@@ -30,12 +30,14 @@ module.exports = function (router) {
                     if (err) {
                         console.log(err)
                     } else {
-                        // console.log('update Status ok---')
+                        //console.log(res.alive)
                     }
                 })
 
             });
         });
+        console.log(hosts.length)
+        UpdatHosts()
         setTimeout(scan, 5000);
     }
 
@@ -86,14 +88,17 @@ module.exports = function (router) {
 
     router.put('/editMachine/:id', function (req, res) {
 
-        console.log(req.body.updateMachine)
 
         let updateMachine = {
             Ip: req.body.updateMachine.Ip,
-            Statusxx: req.body.updateMachine.Status,
             Department: req.body.updateMachine.Department,
             Processor: req.body.updateMachine.Processor
         }
+        // if (updateMachine.Ip === null || updateMachine.Ip === undefined) delete updateMachine.Ip
+        // if (updateMachine.Department === null || updateMachine.Department === undefined) delete updateMachine.Department
+        // if (updateMachine.Processor === null || updateMachine.Processor === undefined) delete updateMachine.Processor
+
+        console.log(updateMachine)
 
         Machine.findOneAndUpdate({ _id: req.params.id }, updateMachine, { new: true }, function (err) {
             if (err) {
