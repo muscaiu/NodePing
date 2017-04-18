@@ -8,5 +8,5 @@ angular.module('pingApp', [
     'machineListController',
     'navbarDirective',
     'ModalInstanceController',
-    'ipServices'
+    'machineServices'
     ])

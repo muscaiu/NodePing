@@ -84,5 +84,26 @@ module.exports = function (router) {
         })
     })
 
+    router.put('/editMachine/:id', function (req, res) {
+
+        console.log(req.body.updateMachine)
+
+        let updateMachine = {
+            Ip: req.body.updateMachine.Ip,
+            Statusxx: req.body.updateMachine.Status,
+            Department: req.body.updateMachine.Department,
+            Processor: req.body.updateMachine.Processor
+        }
+
+        Machine.findOneAndUpdate({ _id: req.params.id }, updateMachine, { new: true }, function (err) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('update ok')
+            }
+        });
+    })
+
+
     return router //return whatever the route is
 }
