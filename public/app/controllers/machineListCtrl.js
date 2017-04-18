@@ -4,7 +4,6 @@ angular.module('machineListController', [])
 
         var machineList = this;
         var displayingObject = {}
-        //$location.path('/list')
         machineList.orderByField = 'ip';
         machineList.reverseSort = false;
         machineList.sortOption = {
