@@ -106,6 +106,17 @@ module.exports = function (router) {
         });
     })
 
+    router.delete('/deleteMachine/:id', function(req, res){
+        Machine.findOne({_id: req.params.id}).remove().exec(function(err, data){
+            if(err){
+                console.log(err)
+            }else{
+                console.log('delete ok', data.result.n)
+                res.send('data delete ok')
+            }
+        })
+    })
+
 
     return router //return whatever the route is
 }

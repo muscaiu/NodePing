@@ -19,5 +19,9 @@ angular.module('machineServices', [])
             return $http.put('/api/updateMachine/' + id, { updateMachine: updateMachine })
         }
 
+        machineFactory.delete = function(id){
+            return $http.delete('/api/deleteMachine/' + id)
+        }
+
         return machineFactory
     })

@@ -57,10 +57,18 @@ angular.module('machineListController', [])
                         modalInstance.result
                             .then(function (newMachine) {
                                 machineList.newMachine = newMachine;
-                                Machine.updateMachine(newMachine._id, newMachine)
-                                    .then(function (response) {
-                                        console.log('got back:', response.data)
-                                    })
+                                if (newMachine.action === 'delete') {
+                                    console.log('deleteing', newMachine.id)
+                                    Machine.delete(newMachine.id)
+                                        .then(function(response){
+                                            console.log('got back delete:',response.data)
+                                        })
+                                } else {
+                                    Machine.updateMachine(newMachine._id, newMachine)
+                                        .then(function (response) {
+                                            console.log('got back update:', response.data)
+                                        })
+                                }
                             }, function () {
                                 $log.info('Modal dismissed at: ' + new Date());
                             });

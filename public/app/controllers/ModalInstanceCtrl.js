@@ -15,4 +15,11 @@ angular.module('ModalInstanceController', [])
         modalInstance.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
+        modalInstance.delete = function () {
+            $uibModalInstance.close(
+                {
+                    id: modalInstance.newMachine._id,
+                    action: 'delete'
+                });
+        };
     });
