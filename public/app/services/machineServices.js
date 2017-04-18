@@ -15,8 +15,8 @@ angular.module('machineServices', [])
             return $http.get('/api/getClickedMachine/' + id)
         }
 
-        machineFactory.editMachine = function (id, updateMachine) {
-            return $http.put('/api/editMachine/' + id, { updateMachine: updateMachine })
+        machineFactory.updateMachine = function (id, updateMachine) {
+            return $http.put('/api/updateMachine/' + id, { updateMachine: updateMachine })
         }
 
         return machineFactory

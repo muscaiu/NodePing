@@ -57,7 +57,7 @@ angular.module('machineListController', [])
                         modalInstance.result
                             .then(function (newMachine) {
                                 machineList.newMachine = newMachine;
-                                Machine.editMachine(newMachine._id, newMachine)
+                                Machine.updateMachine(newMachine._id, newMachine)
                                     .then(function (response) {
                                         console.log('got back:', response.data)
                                     })
@@ -66,7 +66,6 @@ angular.module('machineListController', [])
                             });
                     })
             } else {
-                console.log('no ID')
                 var parentElem = parentSelector ?
                     angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
                 //Modal Code

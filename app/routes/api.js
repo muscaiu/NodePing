@@ -17,9 +17,9 @@ module.exports = function (router) {
             }
         })
     }
-    UpdatHosts()
 
     function scan() {
+        UpdatHosts()
         hosts.forEach(function (host) {
             ping.promise.probe(host.Ip, {
                 timeout: 1,
@@ -36,8 +36,7 @@ module.exports = function (router) {
 
             });
         });
-        console.log(hosts.length)
-        UpdatHosts()
+        console.log(hosts.length)        
         setTimeout(scan, 5000);
     }
 
@@ -86,9 +85,7 @@ module.exports = function (router) {
         })
     })
 
-    router.put('/editMachine/:id', function (req, res) {
-
-
+    router.put('/updateMachine/:id', function (req, res) {
         let updateMachine = {
             Ip: req.body.updateMachine.Ip,
             Department: req.body.updateMachine.Department,
