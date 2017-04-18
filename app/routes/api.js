@@ -35,8 +35,7 @@ module.exports = function (router) {
                 })
 
             });
-        });
-        console.log(hosts.length)        
+        });   
         setTimeout(scan, 5000);
     }
 
