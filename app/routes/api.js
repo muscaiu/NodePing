@@ -47,12 +47,41 @@ module.exports = function (router) {
         setTimeout(scan, 5000);
     }
 
+
     function AddValues() {
         if (DbTimer(startTime) <= 100 && DbTimer(startTime) >= 10) { //add DB values
             console.log(DbTimer(startTime))
             Machine.find({}, function (err, machines) {
                 if (!err) {
                     machines.forEach(function (machine) {
+                        Machine.aggregate([
+                            { $unwind: "$DayStatus" }, {
+                                $group: {
+                                    _id: { Ip: "$Ip", StoredStatus: "$DayStatus.StoredStatus" },
+                                    count: { $sum: 1 }
+                                }
+                            }
+                        ], function (err, data) {
+                            // console.log(data)
+                            data.forEach(function (countStatus) {
+                                var uptimeData = {}
+
+                                if (countStatus._id.StoredStatus === true) {
+                                    uptimeData.Uptime = countStatus.count
+                                }else{
+                                    uptimeData.Downtime = countStatus.count
+                                }
+                                Machine.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
+                                    if (err) {
+                                        console.log(err)
+                                    } else {
+                                        console.log('update ok')
+                                    }
+                                });
+                                // console.log(countStatus._id.Ip, countStatus._id.StoredStatus, countStatus.count)
+                            })
+                        })
+                        //Update Status each 1 minute
                         Machine.findByIdAndUpdate(machine._id, {
                             $push:
                             {
@@ -64,12 +93,14 @@ module.exports = function (router) {
                             function (err, data) { //callback
                                 //console.log(data);
                             }
-                        );
+                        )
                     })
                 } else {
                     console.log(err)
                 }
             })
+
+
         } else if (DbTimer(startTime) > 150) { //reset time
             startTime = moment()
             console.log(DbTimer(startTime))

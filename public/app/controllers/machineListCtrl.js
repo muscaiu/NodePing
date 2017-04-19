@@ -51,10 +51,12 @@ angular.module('machineListController', [])
 
                             //get each ip, //get the hours for this ip, get the status for each your for this ip
 
-                            console.log(allMachines.Ip, moment(dayStatus.StoredDate).format('HH'), dayStatus.StoredStatus)
                             // pushData = { Ip: allMachines.Ip, Hour: moment(dayStatus.StoredDate).format('HH'), Status: dayStatus.StoredStatus }
 
                             // IpArray.indexOf(pushData) === -1 ? IpArray.push(pushData) : console.log("item already exists")
+
+                            // console.log(allMachines.Ip, moment(dayStatus.StoredDate).format('HH'), dayStatus.StoredStatus)
+                            console.log(allMachines.Ip, dayStatus.StoredStatus)
 
                         })
                     }, this)

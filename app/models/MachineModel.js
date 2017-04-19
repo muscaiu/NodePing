@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 var MachineSchema = new Schema({
     Ip: String,
     Status: Boolean,
+    Uptime: Number,
+    Downtime: Number,
     DayStatus: [
         {
             StoredDate: { type: Date, default: Date.now },
