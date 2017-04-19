@@ -18,7 +18,6 @@ angular.module('machineListController', [])
                     .then(function (response) {
                         // machineList.allMachines = [];
                         machineList.allMachines = response.data
-                        console.log('RefreshData 6 sec', machineList.allMachines)
                     })
                 $timeout(RefreshData, 6000)
             }
@@ -34,6 +33,33 @@ angular.module('machineListController', [])
             } else {
                 RefreshData()
             }
+        }
+        var IpArray = []
+        machineList.GetChartData = function () {
+            Machine.getMachines(machineList.sortOption.Department)
+                .then(function (response) {
+                    // machineList.allMachines = [];
+                    machineList.allMachines = response.data
+                    machineList.allMachines.forEach(function (allMachines) {
+                        //console.log([...new Set(machineList.allMachines.map(item => item.Ip))]) //distinct ip's array
+                        allMachines.DayStatus.forEach(function (dayStatus) {
+                            // console.log([...new Set(machineList.allMachines)])
+                            // var hours = ([... new Set(allMachines.DayStatus.map(item => moment(item.StoredDate).format('HH')))])
+                            // var statuses = ([... new Set(allMachines.DayStatus.map(item => item.StoredStatus))])
+                            // console.log(hours)
+                            // console.log(statuses)
+
+                            //get each ip, //get the hours for this ip, get the status for each your for this ip
+
+                            console.log(allMachines.Ip, moment(dayStatus.StoredDate).format('HH'), dayStatus.StoredStatus)
+                            // pushData = { Ip: allMachines.Ip, Hour: moment(dayStatus.StoredDate).format('HH'), Status: dayStatus.StoredStatus }
+
+                            // IpArray.indexOf(pushData) === -1 ? IpArray.push(pushData) : console.log("item already exists")
+
+                        })
+                    }, this)
+                    console.log(IpArray)
+                })
         }
 
         machineList.EditMachine = function (id, parentSelector) {
