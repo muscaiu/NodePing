@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
+    "moment": "^2.18.1",
     "mongoose": "^4.9.4",
     "ping": "^0.2.2",
     "socket.io": "^1.7.3"

@@ -1,11 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var MachineSchema = new Schema({
-    Ip: { type: String },
-    Status: {type: Boolean},
+    Ip: String,
+    Status: Boolean,
+    DayStatus: [
+        {
+            StoredDate: { type: Date, default: Date.now },
+            StoredStatus: { type: Boolean }
+        }
+    ],
     Department: { type: String },
-    Processor: { type: String},
-})
+    Processor: { type: String },
+}, {
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+    })
 
 // InterviewSchema.pre('save', function(next) {
 //     var interview = this

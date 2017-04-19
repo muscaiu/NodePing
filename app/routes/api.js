@@ -3,6 +3,7 @@
 var Machine = require('../models/MachineModel')
 var ping = require('ping');
 var http = require('http');
+var moment = require('moment')
 
 module.exports = function (router) {
 
@@ -16,6 +17,13 @@ module.exports = function (router) {
                 console.log(err)
             }
         })
+    }
+
+    var startTime = moment()
+
+    function DbTimer(before) {
+        var after = moment()
+        return after.diff(before, 'seconds')
     }
 
     function scan() {
@@ -36,10 +44,41 @@ module.exports = function (router) {
 
             });
         });
-        setTimeout(scan, 2000);
+        setTimeout(scan, 5000);
+    }
+
+    function AddValues() {
+        if (DbTimer(startTime) <= 100 && DbTimer(startTime) >= 10) { //add DB values
+            console.log(DbTimer(startTime))
+            Machine.find({}, function (err, machines) {
+                if (!err) {
+                    machines.forEach(function (machine) {
+                        Machine.findByIdAndUpdate(machine._id, {
+                            $push:
+                            {
+                                "DayStatus": {
+                                    StoredDate: startTime, StoredStatus: machine.Status
+                                }
+                            }
+                        }, { new: true },
+                            function (err, data) { //callback
+                                //console.log(data);
+                            }
+                        );
+                    })
+                } else {
+                    console.log(err)
+                }
+            })
+        } else if (DbTimer(startTime) > 150) { //reset time
+            startTime = moment()
+            console.log(DbTimer(startTime))
+        }
+        setTimeout(AddValues, 60000);
     }
 
     scan();
+    AddValues()
 
     router.post('/newMachine', function (req, res) {
         console.log(req.body.newMachine)
@@ -59,7 +98,7 @@ module.exports = function (router) {
     })
 
     router.post('/getMachines', function (req, res) {
-        console.log(req.body.sortOption)
+        //console.log(req.body.sortOption)
         if (req.body.sortOption === 'All') {
             Machine.find({}, function (err, machines) {
                 if (!err) {
