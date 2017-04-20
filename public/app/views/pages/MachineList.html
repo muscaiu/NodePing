@@ -79,7 +79,7 @@
                 <a class="status-alive" ng-show="item.Status">ONLINE</a>
                 <a class="status-dead" ng-show="!item.Status">OFFLINE</a>
             </td>
-            <td>100%</td>
+            <td>{{item.Percent}}%</td><!--<p ng-if="!item.Percent">0<p/>-->
             <td>{{item.Department}}</td>
             <td>{{item.Processor}}</td>
             <td class="col-sm-1"><a ng-click="machineList.EditMachine(item._id)" href="#" class="btn btn-sm">Edit</a></td>

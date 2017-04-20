@@ -54,33 +54,6 @@ module.exports = function (router) {
             Machine.find({}, function (err, machines) {
                 if (!err) {
                     machines.forEach(function (machine) {
-                        Machine.aggregate([
-                            { $unwind: "$DayStatus" }, {
-                                $group: {
-                                    _id: { Ip: "$Ip", StoredStatus: "$DayStatus.StoredStatus" },
-                                    count: { $sum: 1 }
-                                }
-                            }
-                        ], function (err, data) {
-                            // console.log(data)
-                            data.forEach(function (countStatus) {
-                                var uptimeData = {}
-
-                                if (countStatus._id.StoredStatus === true) {
-                                    uptimeData.Uptime = countStatus.count
-                                }else{
-                                    uptimeData.Downtime = countStatus.count
-                                }
-                                Machine.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
-                                    if (err) {
-                                        console.log(err)
-                                    } else {
-                                        console.log('update ok')
-                                    }
-                                });
-                                // console.log(countStatus._id.Ip, countStatus._id.StoredStatus, countStatus.count)
-                            })
-                        })
                         //Update Status each 1 minute
                         Machine.findByIdAndUpdate(machine._id, {
                             $push:
@@ -94,7 +67,52 @@ module.exports = function (router) {
                                 //console.log(data);
                             }
                         )
+
+                        //Add Uptime, Downtime, Total to DB
+                        Machine.aggregate([
+                            { $unwind: "$DayStatus" }, {
+                                $group: {
+                                    _id: { Ip: "$Ip", StoredStatus: "$DayStatus.StoredStatus", Total: { $sum: { $add: ["$Uptime", "$Downtime"] } } },
+                                    // totalthings: { $sum: "$DayStatus.StoredStatus" },
+                                    count: { $sum: 1 }
+                                }
+                            }
+                        ], function (err, data) {
+                            data.forEach(function (countStatus) {
+                                var uptimeData = {}
+
+                                if (countStatus._id.StoredStatus === true) { //if status is online
+                                    uptimeData.Uptime = countStatus.count
+                                } else {    //if status is offline
+                                    uptimeData.Downtime = countStatus.count
+                                }
+
+                                uptimeData.Total = countStatus._id.Total + 1
+                                // uptimeData.Percent = Math.floor((uptimeData.Uptime / uptimeData.Total + 1) *100)
+
+                                Machine.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
+                                    if (err) {
+                                        console.log(err)
+                                    } else {
+                                        //console.log(uptimeData)
+                                    }
+                                });
+                                console.log(countStatus)
+                                // console.log(uptimeData.Percent)
+                            })
+                        })
+
+                        var percent = (machine.Ip, Math.floor((machine.Uptime / machine.Total) * 100))
+
+                        Machine.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function (err) {
+                            if (err) {
+                                console.log(err)
+                            } else {
+                                //console.log('update ok')
+                            }
+                        });
                     })
+
                 } else {
                     console.log(err)
                 }

@@ -5,6 +5,8 @@ var MachineSchema = new Schema({
     Status: Boolean,
     Uptime: Number,
     Downtime: Number,
+    Total: Number,
+    Percent: Number,
     DayStatus: [
         {
             StoredDate: { type: Date, default: Date.now },
