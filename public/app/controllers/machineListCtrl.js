@@ -18,6 +18,7 @@ angular.module('machineListController', [])
                     .then(function (response) {
                         // machineList.allMachines = [];
                         machineList.allMachines = response.data
+                        machineList.countMachines = response.data.length
                     })
                 $timeout(RefreshData, 6000)
             }
