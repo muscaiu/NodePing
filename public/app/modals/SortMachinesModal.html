@@ -5,12 +5,18 @@
 
     <fieldset>
         <div class="text-center">
-            <button class="btn btn-default" type="button" ng-click="sortCtrl.Triboo('Triboo')">Triboo</button>
-            <button class="btn btn-default" type="button" ng-click="sortCtrl.Server('Server')">Server</button>
-            <button class="btn btn-default" type="button" ng-click="sortCtrl.Telekom('Telekom')">Telekom</button>
-            <button class="btn btn-primary" type="button" ng-click="sortCtrl.All('All')">All</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Maran')">Maran</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Triboo')">Triboo</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Telekom')">Telekom</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Tehnic')">Tehnic</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Web')">Web</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Server')">Server</button>
+            <button class="btn btn-default" type="button" ng-click="sortCtrl.Sort('Router')">Router</button>
         </div>
-
+        <br>
+        <div class="text-center">
+            <button class="btn btn-primary" type="button" ng-click="sortCtrl.Sort('All')">All</button>
+        </div>
     </fieldset>
 
 </div>
