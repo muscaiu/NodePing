@@ -6,14 +6,14 @@
     <fieldset>
         <!--<legend>Legend</legend>-->
         <div class="form-group">
-            <label for="inputIp" class="col-lg-2 control-label">Ip</label>
-            <div class="col-lg-10">
+            <label for="inputIp" class="col-md-3 control-label">Ip</label>
+            <div class="col-lg-9">
                 <input ng-model="ctrl.newMachine.Ip" class="form-control" id="inputIp" placeholder="Ip" type="text">
             </div>
         </div>
         <div class="form-group">
-            <label for="selectDepartment" class="col-lg-2 control-label">Department</label>
-            <div class="col-lg-10">
+            <label for="selectDepartment" class="col-md-3 control-label">Department</label>
+            <div class="col-lg-9">
                 <select ng-model="ctrl.newMachine.Department" class="form-control" id="selectDepartment">
                         <option>Maran</option>
                         <option>Triboo</option>
@@ -26,8 +26,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="selectProcessor" class="col-lg-2 control-label">Processor</label>
-            <div class="col-lg-10">
+            <label for="selectProcessor" class="col-md-3 control-label">Processor</label>
+            <div class="col-lg-9">
                 <select ng-model="ctrl.newMachine.Processor" class="form-control" id="selectProcessor">
                         <option>Intel</option>
                         <option>AMD</option>
@@ -35,31 +35,19 @@
                 </select>
             </div>
         </div>
-        <!--<div class="form-group">
-            <label for="UptimeList" class="col-lg-2 control-label">UptimeList</label>
-            <ul ng-repeat="item in ctrl.UptimeList" id="UptimeList">
-                <li class="UptimeList">{{item.StoredDate | date:'MM/dd HH:mm:ss'}} - {{item.StoredStatus}}</li>
-            </ul>
-        </div>-->
-        <!--
-        <div class="btn-group">
-            <label for="UptimeList" class="col-lg-2 control-label">UptimeList</label>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">UptimeList
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu scrollable-menu" ng-repeat="item in ctrl.UptimeList" id="UptimeList" role="menu" id="UptimeList">
-                <li <a href=""> class="UptimeList">{{item.StoredDate | date:'MM/dd HH:mm:ss'}} - {{item.StoredStatus}}</a></li>
-            </ul>
-        </div>-->
         <div class="form-group">
-            <label for="UptimeList" class="col-lg-2 control-label">Uptime Archive</label>
-            <ul class="scrollable-list" id="UptimeList">
-                <ul ng-repeat="item in ctrl.UptimeList" id="UptimeList">
-                    <li ng-class="item.StoredStatus ? 'list-status-alive': 'list-status-dead'">
-                        {{item.StoredDate | date:'MM/dd HH:mm:ss'}}
-                    </li>
-                </ul>
-            </ul>
+            <div ng-if="ctrl.newMachine._id" class="form-group">
+                <label for="UptimeList" class="col-md-3 control-label">Uptime Archive</label>
+                <div class="col-lg-9">
+                    <ul class="scrollable-list" id="UptimeList">
+                        <ul ng-repeat="item in ctrl.UptimeList" id="UptimeList">
+                            <li ng-class="item.StoredStatus ? 'list-status-alive': 'list-status-dead'">
+                                {{item.StoredDate | date:'MMM-dd HH:mm:ss'}}
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
         </div>
 
     </fieldset>
