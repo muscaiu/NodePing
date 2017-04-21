@@ -35,35 +35,35 @@ angular.module('machineListController', [])
                 RefreshData()
             }
         }
-        var IpArray = []
-        machineList.GetChartData = function () {
-            Machine.getMachines(machineList.sortOption.Department)
-                .then(function (response) {
-                    // machineList.allMachines = [];
-                    machineList.allMachines = response.data
-                    machineList.allMachines.forEach(function (allMachines) {
-                        //console.log([...new Set(machineList.allMachines.map(item => item.Ip))]) //distinct ip's array
-                        allMachines.DayStatus.forEach(function (dayStatus) {
-                            // console.log([...new Set(machineList.allMachines)])
-                            // var hours = ([... new Set(allMachines.DayStatus.map(item => moment(item.StoredDate).format('HH')))])
-                            // var statuses = ([... new Set(allMachines.DayStatus.map(item => item.StoredStatus))])
-                            // console.log(hours)
-                            // console.log(statuses)
+        // var IpArray = []
+        // machineList.GetChartData = function () {
+        //     Machine.getMachines(machineList.sortOption.Department)
+        //         .then(function (response) {
+        //             // machineList.allMachines = [];
+        //             machineList.allMachines = response.data
+        //             machineList.allMachines.forEach(function (allMachines) {
+        //                 //console.log([...new Set(machineList.allMachines.map(item => item.Ip))]) //distinct ip's array
+        //                 allMachines.DayStatus.forEach(function (dayStatus) {
+        //                     // console.log([...new Set(machineList.allMachines)])
+        //                     // var hours = ([... new Set(allMachines.DayStatus.map(item => moment(item.StoredDate).format('HH')))])
+        //                     // var statuses = ([... new Set(allMachines.DayStatus.map(item => item.StoredStatus))])
+        //                     // console.log(hours)
+        //                     // console.log(statuses)
 
-                            //get each ip, //get the hours for this ip, get the status for each your for this ip
+        //                     //get each ip, //get the hours for this ip, get the status for each your for this ip
 
-                            // pushData = { Ip: allMachines.Ip, Hour: moment(dayStatus.StoredDate).format('HH'), Status: dayStatus.StoredStatus }
+        //                     // pushData = { Ip: allMachines.Ip, Hour: moment(dayStatus.StoredDate).format('HH'), Status: dayStatus.StoredStatus }
 
-                            // IpArray.indexOf(pushData) === -1 ? IpArray.push(pushData) : console.log("item already exists")
+        //                     // IpArray.indexOf(pushData) === -1 ? IpArray.push(pushData) : console.log("item already exists")
 
-                            // console.log(allMachines.Ip, moment(dayStatus.StoredDate).format('HH'), dayStatus.StoredStatus)
-                            console.log(allMachines.Ip, dayStatus.StoredStatus)
+        //                     // console.log(allMachines.Ip, moment(dayStatus.StoredDate).format('HH'), dayStatus.StoredStatus)
+        //                     console.log(allMachines.Ip, dayStatus.StoredStatus)
 
-                        })
-                    }, this)
-                    console.log(IpArray)
-                })
-        }
+        //                 })
+        //             }, this)
+        //             console.log(IpArray)
+        //         })
+        // }
 
         machineList.EditMachine = function (id, parentSelector) {
             if (id) {
@@ -167,6 +167,42 @@ angular.module('machineListController', [])
                     templateUrl: 'app/modals/SortMachinesModal.html',
                     controller: 'SortMachinesCtrl',
                     controllerAs: 'sortCtrl',
+                    size: 'md',
+                    appendTo: parentElem,
+                    // resolve: { //send the list of items to the modal
+                    //     items: function () {
+                    //         return machineList.editedObject;
+                    //     }
+                    // }
+                });
+            //Modal Result
+            modalInstance.result
+                .then(function (sortOption) {
+                    machineList.sortOption.Department = sortOption;
+                    // Machine.newMachine({
+                    //     newMachine: newMachine
+                    // }).then(function (response) {
+                    // })
+                    checkDisplaying()
+                }, function () {
+                    //$log.info('Modal dismissed at: ' + new Date());
+                });
+        }
+
+        machineList.GetChartData = function (parentSelector) {
+            var parentElem = parentSelector ?
+                angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+            //Modal Code
+            machineList.animationsEnabled = true;
+            //Modal Setup
+            var modalInstance = $uibModal.open(
+                {
+                    animation: machineList.animationsEnabled,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'app/modals/ChartModal.html',
+                    controller: 'chartCtrl',
+                    controllerAs: 'chartCtrl',
                     size: 'md',
                     appendTo: parentElem,
                     // resolve: { //send the list of items to the modal

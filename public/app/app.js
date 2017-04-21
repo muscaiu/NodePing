@@ -9,5 +9,6 @@ angular.module('pingApp', [
     'navbarDirective',
     'EditMachineController',
     'machineServices',
-    'SortMachinesController'
+    'SortMachinesController',
+    'chartController'
     ])
