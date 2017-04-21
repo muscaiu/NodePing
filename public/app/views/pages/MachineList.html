@@ -16,11 +16,33 @@
         <button type="button" class="btn btn-primary" ng-click="machineList.EditMachine()">ADD NEW MACHINE</button>
         <button type="button" class="btn btn-primary" ng-click="machineList.SortMachines()">SORT</button>
         <button type="button" class="btn btn-primary" ng-click="machineList.GetChartData()">CHART</button>
-        <span class="pull-right label label-info">Displaying All</span>
+        <span class="badge pull-right">Displaying {{machineList.sortOption.Department}}</span>
         <!--<button ng-click="machineList.recreate()">Recreate</button>-->
     </div>
 </div>
 
+
+
+    <div class="row col-md-3" ng-repeat="item in machineList.allMachines | filter: searchIp">
+        <div class="panel-card panel-info">
+            <div class="panel-heading" ng-class="item.Status === true ? 'status-alive': 'status-dead'" ng-click="machineList.EditMachine(item._id)"
+                href="#">
+                <h3 class="panel-title">
+                    <b>{{item.Ip}} 
+                    <span ng-if="item.Percent" class="pull-right badge">{{item.Percent}}%</span>
+                    <span ng-if="!item.Percent" class="pull-right badge">{{0}}%</span>
+                </b>
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{item.Department}}
+            </div>
+        </div>
+
+    </div>
+
+
+    
 
 <!--<table ng-cloak class="table table-striped table-bordered">
     <thead>
@@ -87,39 +109,5 @@
         </tr>
     </tbody>
 </table>-->
-
-<div class="col-md-3" ng-repeat="item in machineList.allMachines | filter: searchIp">
-    <div class="panel-card panel-info">
-        <div ng-click="machineList.EditMachine(item._id)" href="#" class="panel-heading">
-            <h3 class="panel-title">
-                <b>{{item.Ip}} <span style="background-color:lightgreen" class="pull-right badge">{{item.Percent}}%</span></b>
-            </h3>
-        </div>
-        <div class="panel-body">
-            {{item.Department}}
-        </div>
-    </div>
-
-</div>
-<!--<table class="table table-striped table-hover table-bordered">
-        <thead>
-            <tr>
-                <th>Ip</th>
-                <th>Status</th>
-                <th>Department</th>
-                <th> Processor</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="item in machineList.allMachines">
-                <td>{{item.Ip}}</td>
-                <td>ONLINE</td>
-                <td>{{item.Department}}</td>
-                <td>{{item.Processor}}</td>
-                <td>Edit</td>
-            </tr>
-        </tbody>
-    </table>-->
 
 <!--<span>Ordered By: {{machineList.orderByField}}, Reverse Sort: {{machineList.reverseSort}}</span>-->

@@ -2,7 +2,6 @@ angular.module('EditMachineController', [])
 
     .controller('EditMachineCtrl', function ($uibModalInstance, currentMachine) {
         var modalInstance = this;
-        console.log(currentMachine)
 
         modalInstance.newMachine = currentMachine;
 

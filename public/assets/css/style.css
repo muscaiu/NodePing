@@ -1,8 +1,12 @@
 .status-alive{
-    background-color: lightgreen;
+    padding: 10px 15px;
+    background-color: #4caf50 !important;
+    cursor: pointer;
 }
 .status-dead{
-    background-color: lightcoral;
+    padding: 10px 15px;
+    background-color: #f92a2d !important;
+    cursor: pointer;
 }
 .panel-card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -16,7 +20,19 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.panel-info>.panel-heading {
+.lb-sm {
+  font-size: 12px;
+}
+
+.lb-md {
+  font-size: 16px;
+}
+
+.lb-lg {
+  font-size: 20px;
+}
+
+/*.panel-info>.panel-heading {
     cursor: pointer;
     background-color: #4caf50 !important;
-}
+}*/

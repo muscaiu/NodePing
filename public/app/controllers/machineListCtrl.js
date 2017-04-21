@@ -86,7 +86,7 @@ angular.module('machineListController', [])
                                 appendTo: parentElem,
                                 resolve: { //send the list of items to the modal
                                     currentMachine: function () {
-                                        console.log(machineList.editedObject)
+                                        //console.log(machineList.editedObject)
                                         return machineList.editedObject;
                                     }
                                 }
@@ -110,7 +110,7 @@ angular.module('machineListController', [])
                                         })
                                 }
                             }, function () {
-                                $log.info('Modal dismissed at: ' + new Date());
+                                //$log.info('Modal dismissed at: ' + new Date());
                             });
                     })
             } else {
@@ -147,7 +147,7 @@ angular.module('machineListController', [])
                             console.log('got back:', response.data)
                         })
                     }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
+                        //$log.info('Modal dismissed at: ' + new Date());
                     });
             }
         }
@@ -184,7 +184,7 @@ angular.module('machineListController', [])
                     // })
                     checkDisplaying()
                 }, function () {
-                    $log.info('Modal dismissed at: ' + new Date());
+                    //$log.info('Modal dismissed at: ' + new Date());
                 });
         }
 
