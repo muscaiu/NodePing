@@ -92,12 +92,13 @@ module.exports = function (router) {
 
                                 Machine.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
                                     if (err) {
-                                        console.log(err)
+                                        // console.log(err)
+                                        console.log(countStatus._id.Ip, 'Error: findOneAndUpdate uptimeData')
                                     } else {
                                         //console.log(uptimeData)
                                     }
                                 });
-                                console.log(countStatus)
+                                //console.log(countStatus)
                                 // console.log(uptimeData.Percent)
                             })
                         })
@@ -106,7 +107,8 @@ module.exports = function (router) {
 
                         Machine.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function (err) {
                             if (err) {
-                                console.log(err)
+                                console.log(machine.Ip, 'Error: findOneAndUpdate Percent:', percent)
+                                // console.log(err)
                             } else {
                                 //console.log('update ok')
                             }
@@ -135,6 +137,9 @@ module.exports = function (router) {
         machine.Ip = req.body.newMachine.Ip
         machine.Department = req.body.newMachine.Department
         machine.Processor = req.body.newMachine.Processor
+        machine.Uptime = 0
+        machine.Downtime = 0
+        machine.Total = 0
 
         machine.save(function (err) {
             if (err) {
