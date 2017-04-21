@@ -1,21 +1,24 @@
 angular.module('EditMachineController', [])
 
     .controller('EditMachineCtrl', function ($uibModalInstance, currentMachine) {
-        var modalInstance = this;
+        var ctrl = this;
 
-        modalInstance.newMachine = currentMachine;
+        ctrl.newMachine = currentMachine;
 
-        modalInstance.ok = function () {
-            $uibModalInstance.close(modalInstance.newMachine);
+        ctrl.UptimeList = ctrl.newMachine.DayStatus
+
+
+        ctrl.ok = function () {
+            $uibModalInstance.close(ctrl.newMachine);
         };
 
-        modalInstance.cancel = function () {
+        ctrl.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
 
-        modalInstance.delete = function () {
+        ctrl.delete = function () {
             $uibModalInstance.close({
-                id: modalInstance.newMachine._id,
+                id: ctrl.newMachine._id,
                 action: 'delete'
             });
         };

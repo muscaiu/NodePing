@@ -8,6 +8,12 @@
     background-color: #f92a2d !important;
     cursor: pointer;
 }
+.list-status-alive{
+    color:#4caf50
+}
+.list-status-dead{
+    color:#f92a2d
+}
 .panel-card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
@@ -31,6 +37,23 @@
 
 .lb-lg {
   font-size: 20px;
+}
+
+.scrollable-list {
+    width: 50%;
+    height: 10em;
+    line-height: 1em;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+ul  {
+    text-indent: 1em;
+    list-style-type: none;
 }
 
 /*.panel-info>.panel-heading {

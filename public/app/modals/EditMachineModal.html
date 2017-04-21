@@ -3,18 +3,6 @@
     <h3 ng-if="!ctrl.newMachine._id" class="modal-title" id="modal-title">New Machine</h3>
 </div>
 <div class="modal-body" id="modal-body">
-    <!--<ul>
-        <li ng-repeat="item in ctrl.items">
-            <a href="#" ng-click="$event.preventDefault(); 
-                ctrl.selected.item = item">
-                    {{ item }}
-            </a>
-        </li>
-    </ul>
-    Selected: <b>{{ ctrl.selected.item }}</b>-->
-
-
-
     <fieldset>
         <!--<legend>Legend</legend>-->
         <div class="form-group">
@@ -47,6 +35,33 @@
                 </select>
             </div>
         </div>
+        <!--<div class="form-group">
+            <label for="UptimeList" class="col-lg-2 control-label">UptimeList</label>
+            <ul ng-repeat="item in ctrl.UptimeList" id="UptimeList">
+                <li class="UptimeList">{{item.StoredDate | date:'MM/dd HH:mm:ss'}} - {{item.StoredStatus}}</li>
+            </ul>
+        </div>-->
+        <!--
+        <div class="btn-group">
+            <label for="UptimeList" class="col-lg-2 control-label">UptimeList</label>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">UptimeList
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu scrollable-menu" ng-repeat="item in ctrl.UptimeList" id="UptimeList" role="menu" id="UptimeList">
+                <li <a href=""> class="UptimeList">{{item.StoredDate | date:'MM/dd HH:mm:ss'}} - {{item.StoredStatus}}</a></li>
+            </ul>
+        </div>-->
+        <div class="form-group">
+            <label for="UptimeList" class="col-lg-2 control-label">Uptime Archive</label>
+            <ul class="scrollable-list" id="UptimeList">
+                <ul ng-repeat="item in ctrl.UptimeList" id="UptimeList">
+                    <li ng-class="item.StoredStatus ? 'list-status-alive': 'list-status-dead'">
+                        {{item.StoredDate | date:'MM/dd HH:mm:ss'}}
+                    </li>
+                </ul>
+            </ul>
+        </div>
+
     </fieldset>
 
 </div>
