@@ -1,9 +1,11 @@
-'use strict'
-
 angular.module('chartController', [])
 
-    .controller('chartCtrl', function ($http, $location) {
+    .controller('chartCtrl', function ($uibModalInstance, allMachines) {
+        var chart = this;
 
-        console.log('chart OK')
+        console.log(allMachines)
+        // modalInstance.cancel = function () {
+        //     $uibModalInstance.dismiss('cancel');
+        // };
 
-    })
+    });

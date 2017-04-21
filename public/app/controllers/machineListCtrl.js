@@ -202,14 +202,14 @@ angular.module('machineListController', [])
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'app/modals/ChartModal.html',
                     controller: 'chartCtrl',
-                    controllerAs: 'chartCtrl',
+                    controllerAs: 'chart',
                     size: 'md',
                     appendTo: parentElem,
-                    // resolve: { //send the list of items to the modal
-                    //     items: function () {
-                    //         return machineList.editedObject;
-                    //     }
-                    // }
+                    resolve: { //send the list of items to the modal
+                        allMachines: function () {
+                            return machineList.allMachines;
+                        }
+                    }
                 });
             //Modal Result
             modalInstance.result
