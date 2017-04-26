@@ -3,7 +3,7 @@
 var MachineModel = require('../models/MachineModel')
 var UptimeModel = require('../models/UptimeModel')
 var ping = require('ping');
-var http = require('http');
+//var http = require('http');
 var moment = require('moment')
 
 module.exports = function(router) {
