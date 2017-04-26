@@ -7,7 +7,7 @@ angular.module('chartController', ["chart.js"])
         $scope.data = [0, 0, 0, 0, 0, 0, 0]
         $scope.series = ['All Data']
         $scope.options = {
-            responsive: false,
+            //responsive: false,
             maintainAspectRatio: true,
             legend: { display: true }
         }
