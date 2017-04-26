@@ -6,7 +6,12 @@ angular.module('chartController', ["chart.js"])
         $scope.labels = ['Maran', 'Triboo', 'Telekom', 'Tehnic', 'Web', 'Server', 'Router']
         $scope.data = [0, 0, 0, 0, 0, 0, 0]
         $scope.series = ['All Data']
-        // $scope.colors = ["#adabab", "#52aa25"]
+        $scope.options = {
+            responsive: false,
+            maintainAspectRatio: true,
+            legend: { display: true }
+        }
+        // $scope.colors = ["#F7464A", "#97BBCD", "#000000"]
 
         for (let i = 0; i < $scope.labels.length; i++) {
 
@@ -14,9 +19,7 @@ angular.module('chartController', ["chart.js"])
                 if ($scope.labels[i] == allMachines[x].Department) {
                     $scope.data[i]++
                 }
-
             }
-
         }
         console.log($scope.data)
 

@@ -1,6 +1,7 @@
 'use strict'
 
-var Machine = require('../models/MachineModel')
+var MachineModel = require('../models/MachineModel')
+var UptimeModel = require('../models/UptimeModel')
 var ping = require('ping');
 var http = require('http');
 var moment = require('moment')
@@ -10,7 +11,7 @@ module.exports = function (router) {
     var hosts = []
 
     function UpdatHosts() {
-        Machine.find({}, function (err, machineList) {
+        MachineModel.find({}, function (err, machineList) {
             if (!err) {
                 hosts = machineList
             } else {
@@ -34,7 +35,7 @@ module.exports = function (router) {
                 //min_reply: 3,
                 // extra: ["-i 2"],
             }).then(function (res) {
-                Machine.findOneAndUpdate({ Ip: host.Ip }, { Status: res.alive }, { new: true }, function (err) {
+                MachineModel.findOneAndUpdate({ Ip: host.Ip }, { Status: res.alive }, { new: true }, function (err) {
                     if (err) {
                         console.log(err)
                     } else {
@@ -47,15 +48,21 @@ module.exports = function (router) {
         setTimeout(scan, 5000);
     }
 
+    //   today     - Ip - timestamp
+//                      - status
+    //   yesterday - Ip - timestamp
+    //                  - status
+    //   daybefore - Ip - timestamp
+    //                  - status
 
     function AddValues() {
         if (DbTimer(startTime) <= 100 && DbTimer(startTime) >= 10) { //add DB values
             console.log(DbTimer(startTime))
-            Machine.find({}, function (err, machines) {
+            MachineModel.find({}, function (err, machines) {
                 if (!err) {
                     machines.forEach(function (machine) {
                         //Update Status each 1 minute
-                        Machine.findByIdAndUpdate(machine._id, {
+                        MachineModel.findByIdAndUpdate(machine._id, {
                             $push:
                             {
                                 "DayStatus": {
@@ -67,9 +74,20 @@ module.exports = function (router) {
                                 //console.log(data);
                             }
                         )
+                        UptimeModel.findByIdAndUpdate(machine._id, {
+                            $push:
+                            {
+                                StoredDate: startTime, 
+                                StoredStatus: machine.Status
+                            }
+                        }, { new: true },
+                            function (err, data) { //callback
+                                //console.log(data);
+                            }
+                        )
 
                         //Add Uptime, Downtime, Total to DB
-                        Machine.aggregate([
+                        MachineModel.aggregate([
                             { $unwind: "$DayStatus" }, {
                                 $group: {
                                     _id: { Ip: "$Ip", StoredStatus: "$DayStatus.StoredStatus", Total: { $sum: { $add: ["$Uptime", "$Downtime"] } } },
@@ -90,7 +108,7 @@ module.exports = function (router) {
                                 uptimeData.Total = countStatus._id.Total + 1
                                 // uptimeData.Percent = Math.floor((uptimeData.Uptime / uptimeData.Total + 1) *100)
 
-                                Machine.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
+                                MachineModel.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
                                     if (err) {
                                         // console.log(err)
                                         console.log(countStatus._id.Ip, 'Error: findOneAndUpdate uptimeData')
@@ -105,7 +123,7 @@ module.exports = function (router) {
 
                         var percent = (machine.Ip, Math.floor((machine.Uptime / machine.Total) * 100))
 
-                        Machine.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function (err) {
+                        MachineModel.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function (err) {
                             if (err) {
                                 console.log(machine.Ip, 'Error: findOneAndUpdate Percent:', percent)
                                 // console.log(err)
@@ -133,7 +151,7 @@ module.exports = function (router) {
 
     router.post('/newMachine', function (req, res) {
         console.log(req.body.newMachine)
-        var machine = new Machine()
+        var machine = new MachineModel()
         machine.Ip = req.body.newMachine.Ip
         machine.Department = req.body.newMachine.Department
         machine.Processor = req.body.newMachine.Processor
@@ -154,7 +172,7 @@ module.exports = function (router) {
     router.post('/getMachines', function (req, res) {
         //console.log(req.body.sortOption)
         if (req.body.sortOption === 'All') {
-            Machine.find({}, function (err, machines) {
+            MachineModel.find({}, function (err, machines) {
                 if (!err) {
                     res.send(machines)
                 } else {
@@ -162,7 +180,7 @@ module.exports = function (router) {
                 }
             })
         } else {
-            Machine.find({ "Department": req.body.sortOption }, function (err, machines) {
+            MachineModel.find({ "Department": req.body.sortOption }, function (err, machines) {
                 if (!err) {
                     res.send(machines)
                 } else {
@@ -174,7 +192,7 @@ module.exports = function (router) {
 
     router.get('/getClickedMachine/:id', function (req, res) {
 
-        Machine.findOne({ _id: req.params.id }).select().exec(function (err, item) {
+        MachineModel.findOne({ _id: req.params.id }).select().exec(function (err, item) {
             if (err) throw err;
             if (!item) {
                 console.log("Can't find id to edit.", 'error')
@@ -196,7 +214,7 @@ module.exports = function (router) {
 
         console.log(updateMachine)
 
-        Machine.findOneAndUpdate({ _id: req.params.id }, updateMachine, { new: true }, function (err) {
+        MachineModel.findOneAndUpdate({ _id: req.params.id }, updateMachine, { new: true }, function (err) {
             if (err) {
                 console.log(err)
             } else {
@@ -207,7 +225,7 @@ module.exports = function (router) {
     })
 
     router.delete('/deleteMachine/:id', function (req, res) {
-        Machine.findOne({ _id: req.params.id }).remove().exec(function (err, data) {
+        MachineModel.findOne({ _id: req.params.id }).remove().exec(function (err, data) {
             if (err) {
                 console.log(err)
             } else {
