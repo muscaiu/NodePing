@@ -6,12 +6,12 @@ var ping = require('ping');
 var http = require('http');
 var moment = require('moment')
 
-module.exports = function (router) {
+module.exports = function(router) {
 
     var hosts = []
 
     function UpdatHosts() {
-        MachineModel.find({}, function (err, machineList) {
+        MachineModel.find({}, function(err, machineList) {
             if (!err) {
                 hosts = machineList
             } else {
@@ -29,13 +29,13 @@ module.exports = function (router) {
 
     function scan() {
         UpdatHosts()
-        hosts.forEach(function (host) {
+        hosts.forEach(function(host) {
             ping.promise.probe(host.Ip, {
                 timeout: 1,
                 //min_reply: 3,
                 // extra: ["-i 2"],
-            }).then(function (res) {
-                MachineModel.findOneAndUpdate({ Ip: host.Ip }, { Status: res.alive }, { new: true }, function (err) {
+            }).then(function(res) {
+                MachineModel.findOneAndUpdate({ Ip: host.Ip }, { Status: res.alive }, { new: true }, function(err) {
                     if (err) {
                         console.log(err)
                     } else {
@@ -58,30 +58,29 @@ module.exports = function (router) {
     function AddValues() {
         if (DbTimer(startTime) <= 100 && DbTimer(startTime) >= 10) { //add DB values
             console.log(DbTimer(startTime))
-            MachineModel.find({}, function (err, machines) {
+            MachineModel.find({}, function(err, machines) {
                 if (!err) {
-                    machines.forEach(function (machine) {
+                    machines.forEach(function(machine) {
                         //Update Status each 1 minute
                         MachineModel.findByIdAndUpdate(machine._id, {
-                            $push:
-                            {
-                                "DayStatus": {
-                                    StoredDate: startTime, StoredStatus: machine.Status
+                                $push: {
+                                    "DayStatus": {
+                                        StoredDate: startTime,
+                                        StoredStatus: machine.Status
+                                    }
                                 }
-                            }
-                        }, { new: true },
-                            function (err, data) { //callback
+                            }, { new: true },
+                            function(err, data) { //callback
                                 //console.log(data);
                             }
                         )
                         UptimeModel.findByIdAndUpdate(machine._id, {
-                            $push:
-                            {
-                                StoredDate: startTime,
-                                StoredStatus: machine.Status
-                            }
-                        }, { new: true },
-                            function (err, data) { //callback
+                                $push: {
+                                    StoredDate: startTime,
+                                    StoredStatus: machine.Status
+                                }
+                            }, { new: true },
+                            function(err, data) { //callback
                                 //console.log(data);
                             }
                         )
@@ -95,20 +94,20 @@ module.exports = function (router) {
                                     count: { $sum: 1 }
                                 }
                             }
-                        ], function (err, data) {
-                            data.forEach(function (countStatus) {
+                        ], function(err, data) {
+                            data.forEach(function(countStatus) {
                                 var uptimeData = {}
 
                                 if (countStatus._id.StoredStatus === true) { //if status is online
                                     uptimeData.Uptime = countStatus.count
-                                } else {    //if status is offline
+                                } else { //if status is offline
                                     uptimeData.Downtime = countStatus.count
                                 }
 
                                 uptimeData.Total = countStatus._id.Total + 1
-                                // uptimeData.Percent = Math.floor((uptimeData.Uptime / uptimeData.Total + 1) *100)
+                                    // uptimeData.Percent = Math.floor((uptimeData.Uptime / uptimeData.Total + 1) *100)
 
-                                MachineModel.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function (err) {
+                                MachineModel.findOneAndUpdate({ Ip: countStatus._id.Ip }, uptimeData, { new: true }, function(err) {
                                     if (err) {
                                         // console.log(err)
                                         console.log(countStatus._id.Ip, 'Error: findOneAndUpdate uptimeData')
@@ -120,19 +119,22 @@ module.exports = function (router) {
                                 // console.log(uptimeData.Percent)
                             })
                         })
-                        console.log('uptime', machine.Uptime)
-                        console.log('total', machine.Total)
+
+                        //Calculate percentage
                         function percentage(uptime, total) {
-                            return (uptime / total) * 100;
+                            if (uptime === 0 && total === 0) {
+                                return 0
+                            } else {
+                                return Math.floor(uptime / total) * 100;
+                            }
                         }
-
-                        // var percent = (machine.Ip, Math.floor((machine.Uptime / machine.Total) * 100))
                         var percent = (percentage(machine.Uptime, machine.Total));
+                        console.log(machine.Ip, percent)
 
-                        MachineModel.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function (err) {
+                        MachineModel.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function(err) {
                             if (err) {
                                 console.log(machine.Ip, 'Error: findOneAndUpdate Percent:', percent)
-                                // console.log(err)
+                                    // console.log(err)
                             } else {
                                 //console.log('update ok')
                             }
@@ -155,7 +157,7 @@ module.exports = function (router) {
     scan();
     AddValues()
 
-    router.post('/newMachine', function (req, res) {
+    router.post('/newMachine', function(req, res) {
         console.log(req.body.newMachine)
         var machine = new MachineModel()
         machine.Ip = req.body.newMachine.Ip
@@ -165,7 +167,7 @@ module.exports = function (router) {
         machine.Downtime = 0
         machine.Total = 0
 
-        machine.save(function (err) {
+        machine.save(function(err) {
             if (err) {
                 console.log(err)
             } else {
@@ -175,10 +177,10 @@ module.exports = function (router) {
         res.send(req.body.newMachine)
     })
 
-    router.post('/getMachines', function (req, res) {
+    router.post('/getMachines', function(req, res) {
         //console.log(req.body.sortOption)
         if (req.body.sortOption === 'All') {
-            MachineModel.find({}, function (err, machines) {
+            MachineModel.find({}, function(err, machines) {
                 if (!err) {
                     res.send(machines)
                 } else {
@@ -186,7 +188,7 @@ module.exports = function (router) {
                 }
             })
         } else {
-            MachineModel.find({ "Department": req.body.sortOption }, function (err, machines) {
+            MachineModel.find({ "Department": req.body.sortOption }, function(err, machines) {
                 if (!err) {
                     res.send(machines)
                 } else {
@@ -196,9 +198,9 @@ module.exports = function (router) {
         }
     })
 
-    router.get('/getClickedMachine/:id', function (req, res) {
+    router.get('/getClickedMachine/:id', function(req, res) {
 
-        MachineModel.findOne({ _id: req.params.id }).select().exec(function (err, item) {
+        MachineModel.findOne({ _id: req.params.id }).select().exec(function(err, item) {
             if (err) throw err;
             if (!item) {
                 console.log("Can't find id to edit.", 'error')
@@ -208,19 +210,19 @@ module.exports = function (router) {
         })
     })
 
-    router.put('/updateMachine/:id', function (req, res) {
+    router.put('/updateMachine/:id', function(req, res) {
         let updateMachine = {
-            Ip: req.body.updateMachine.Ip,
-            Department: req.body.updateMachine.Department,
-            Processor: req.body.updateMachine.Processor
-        }
-        // if (updateMachine.Ip === null || updateMachine.Ip === undefined) delete updateMachine.Ip
-        // if (updateMachine.Department === null || updateMachine.Department === undefined) delete updateMachine.Department
-        // if (updateMachine.Processor === null || updateMachine.Processor === undefined) delete updateMachine.Processor
+                Ip: req.body.updateMachine.Ip,
+                Department: req.body.updateMachine.Department,
+                Processor: req.body.updateMachine.Processor
+            }
+            // if (updateMachine.Ip === null || updateMachine.Ip === undefined) delete updateMachine.Ip
+            // if (updateMachine.Department === null || updateMachine.Department === undefined) delete updateMachine.Department
+            // if (updateMachine.Processor === null || updateMachine.Processor === undefined) delete updateMachine.Processor
 
         console.log(updateMachine)
 
-        MachineModel.findOneAndUpdate({ _id: req.params.id }, updateMachine, { new: true }, function (err) {
+        MachineModel.findOneAndUpdate({ _id: req.params.id }, updateMachine, { new: true }, function(err) {
             if (err) {
                 console.log(err)
             } else {
@@ -230,8 +232,8 @@ module.exports = function (router) {
         });
     })
 
-    router.delete('/deleteMachine/:id', function (req, res) {
-        MachineModel.findOne({ _id: req.params.id }).remove().exec(function (err, data) {
+    router.delete('/deleteMachine/:id', function(req, res) {
+        MachineModel.findOne({ _id: req.params.id }).remove().exec(function(err, data) {
             if (err) {
                 console.log(err)
             } else {
