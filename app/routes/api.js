@@ -49,7 +49,7 @@ module.exports = function (router) {
     }
 
     //   today     - Ip - timestamp
-//                      - status
+    //                  - status
     //   yesterday - Ip - timestamp
     //                  - status
     //   daybefore - Ip - timestamp
@@ -77,7 +77,7 @@ module.exports = function (router) {
                         UptimeModel.findByIdAndUpdate(machine._id, {
                             $push:
                             {
-                                StoredDate: startTime, 
+                                StoredDate: startTime,
                                 StoredStatus: machine.Status
                             }
                         }, { new: true },
@@ -120,8 +120,14 @@ module.exports = function (router) {
                                 // console.log(uptimeData.Percent)
                             })
                         })
+                        console.log('uptime', machine.Uptime)
+                        console.log('total', machine.Total)
+                        function percentage(uptime, total) {
+                            return (uptime / total) * 100;
+                        }
 
-                        var percent = (machine.Ip, Math.floor((machine.Uptime / machine.Total) * 100))
+                        // var percent = (machine.Ip, Math.floor((machine.Uptime / machine.Total) * 100))
+                        var percent = (percentage(machine.Uptime, machine.Total));
 
                         MachineModel.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function (err) {
                             if (err) {
