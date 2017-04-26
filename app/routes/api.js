@@ -95,6 +95,7 @@ module.exports = function(router) {
                                 }
                             }
                         ], function(err, data) {
+                            console.log(data)
                             data.forEach(function(countStatus) {
                                 var uptimeData = {}
 
@@ -129,7 +130,7 @@ module.exports = function(router) {
                             }
                         }
                         var percent = (percentage(machine.Uptime, machine.Total));
-                        console.log(machine.Ip, percent)
+                        console.log(machine.Ip, machine.Uptime, machine.Total, percent)
 
                         MachineModel.findOneAndUpdate({ Ip: machine.Ip }, { Percent: percent }, { new: true }, function(err) {
                             if (err) {
